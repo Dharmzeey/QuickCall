@@ -1,3 +1,3 @@
-class AppConstatnts {
+class AppUrls {
   static const String medicalUrl = "";
 }

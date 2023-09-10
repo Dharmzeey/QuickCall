@@ -11,7 +11,7 @@ class LoginSignupButton extends StatelessWidget {
     return FilledButton(
       onPressed: () {},
       style: FilledButton.styleFrom(
-          backgroundColor: AppColors.mainColor,
+          backgroundColor: AppColors.secondaryColor,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
           padding: EdgeInsets.all(AppDimensions.paddingSmall),
           minimumSize: Size(

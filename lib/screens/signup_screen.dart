@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quickcall/routes/routes.dart';
 import 'package:quickcall/utils/colors.dart';
 import 'package:quickcall/utils/dimension.dart';
 import 'package:quickcall/widgets/account_created_or_not_widget.dart';
@@ -70,7 +71,7 @@ class SignUp extends StatelessWidget {
               height: AppDimensions.spacing150,
             ),
             const AccountCreatedOrNot(
-                statusQuery: "Have an account already?", authQuery: "Login")
+                statusQuery: "Have an account already?", authQuery: "Login", routeTo: AppRoutes.login,)
           ],
         ),
       ),

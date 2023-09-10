@@ -5,7 +5,6 @@ class AppDimensions {
   static double screenWidth = Get.context!.width;
 
   static double font32 = screenHeight / 42.18;
-
   static double font24 = screenHeight / 56.25;
   static double font20 = screenHeight / 67.5;
   static double font18 = screenHeight / 75;
@@ -19,7 +18,6 @@ class AppDimensions {
   static double spacing20 = screenHeight / 67.5;
 
   static double width225 = screenWidth / 2;
-  // static double width400 = screenWidth / 2;
 
   static double divideBy14 = screenWidth / 14;
 }

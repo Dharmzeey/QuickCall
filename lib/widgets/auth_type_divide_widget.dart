@@ -18,8 +18,7 @@ class AuthTypeDivider extends StatelessWidget {
         ),
         const Text(" Or ",
             style: TextStyle(
-              color: AppColors.mainColor,
-            )),
+                color: AppColors.mainColor, fontWeight: FontWeight.w700,)),
         Text(
           '-' * AppDimensions.divideBy14.toInt(),
           style: const TextStyle(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quickcall/routes/routes.dart';
 import 'package:quickcall/utils/colors.dart';
 import 'package:quickcall/utils/dimension.dart';
 import 'package:quickcall/widgets/account_created_or_not_widget.dart';
@@ -33,12 +34,20 @@ class Login extends StatelessWidget {
               height: AppDimensions.spacing100,
             ),
             const LoginTextInputWidget(
-                iconType: Icon(Icons.mail), label: "Email"),
+                iconType: Icon(
+                  Icons.mail,
+                  color: AppColors.mainColor,
+                ),
+                label: "Email"),
             SizedBox(
               height: AppDimensions.spacing50,
             ),
             const LoginTextInputWidget(
-                iconType: Icon(Icons.key), label: "Password"),
+                iconType: Icon(
+                  Icons.key,
+                  color: AppColors.mainColor,
+                ),
+                label: "Password"),
             SizedBox(
               height: AppDimensions.spacing50,
             ),
@@ -90,7 +99,10 @@ class Login extends StatelessWidget {
               height: AppDimensions.spacing100,
             ),
             const AccountCreatedOrNot(
-                statusQuery: "Don't have an account?", authQuery: "Sign up")
+              statusQuery: "Don't have an account?",
+              authQuery: "Sign up",
+              routeTo: AppRoutes.signup,
+            )
           ],
         ),
       ),
