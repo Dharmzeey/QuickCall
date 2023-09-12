@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:quickcall/utils/colors.dart';
 import 'package:quickcall/utils/dimension.dart';
 
-class LoginSignupButton extends StatelessWidget {
+class ActionButton extends StatelessWidget {
   final String text;
-  const LoginSignupButton({super.key, required this.text});
+  final dynamic routeTo;
+  const ActionButton({super.key, required this.text, required this.routeTo});
 
   @override
   Widget build(BuildContext context) {
     return FilledButton(
-      onPressed: () {},
+      onPressed: () {
+        Get.toNamed(routeTo);
+      },
       style: FilledButton.styleFrom(
-          backgroundColor: AppColors.secondaryColor,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+          backgroundColor: AppColors.buttonColor,
           padding: EdgeInsets.all(AppDimensions.paddingSmall),
           minimumSize: Size(
               AppDimensions.screenWidth / 2, AppDimensions.screenHeight / 30)),

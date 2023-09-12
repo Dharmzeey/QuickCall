@@ -5,7 +5,7 @@ import 'package:quickcall/utils/dimension.dart';
 import 'package:quickcall/widgets/account_created_or_not_widget.dart';
 import 'package:quickcall/widgets/auth_type_divide_widget.dart';
 import 'package:quickcall/widgets/google_auth_widget.dart';
-import 'package:quickcall/widgets/login_signup_button.dart';
+import 'package:quickcall/widgets/button_widgets.dart';
 import 'package:quickcall/widgets/text_input_widget.dart';
 
 class SignUp extends StatelessWidget {
@@ -22,56 +22,38 @@ class SignUp extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
-              height: AppDimensions.spacing150,
+              height: AppDimensions.spacing200,
+            ),
+            Container(
+              height: AppDimensions.height120,
+              width: AppDimensions.height120,
+              decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage("images/loggingin.png"),
+                      fit: BoxFit.contain)),
+            ),
+            SizedBox(
+              height: AppDimensions.spacing20,
             ),
             Text(
               "SIGN UP",
               style: TextStyle(
-                  fontSize: AppDimensions.font32,
-                  color: AppColors.mainColor,
-                  fontWeight: FontWeight.w700),
+                  fontSize: AppDimensions.font24, color: AppColors.mainColor),
             ),
             SizedBox(
-              height: AppDimensions.spacing100,
+              height: AppDimensions.spacing20,
             ),
-            const GoogleAuthWidget(
-              label: "Sign up with Google",
-            ),
-            SizedBox(
-              height: AppDimensions.spacing50,
-            ),
-            const AuthTypeDivider(),
-            SizedBox(
-              height: AppDimensions.spacing50,
-            ),
-            const Row(
-              children: [
-                Expanded(
-                  child: SignUpTextInputWidget(
-                    label: "First Name",
-                  ),
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                Expanded(
-                  child: SignUpTextInputWidget(
-                    label: "Last Name",
-                  ),
-                )
-              ],
-            ),
-            SizedBox(height: AppDimensions.spacing20),
-            const SignUpTextInputWidget(label: "Email"),
-            SizedBox(height: AppDimensions.spacing20),
+            const SignUpTextInputWidget(label: "Username"),
+            SizedBox(height: AppDimensions.spacing30),
             const SignUpTextInputWidget(label: "Password"),
-            SizedBox(height: AppDimensions.spacing20),
-            const LoginSignupButton(text: "Create Account"),
+            SizedBox(height: AppDimensions.spacing50),
+            const AuthTypeDivider(),
+            SizedBox(height: AppDimensions.spacing50),
+            const GoogleAuthWidget(label: "Continue with Google"),
             SizedBox(
-              height: AppDimensions.spacing150,
+              height: AppDimensions.spacing250,
             ),
-            const AccountCreatedOrNot(
-                statusQuery: "Have an account already?", authQuery: "Login", routeTo: AppRoutes.login,)
+            const ActionButton(text: "Next", routeTo: AppRoutes.allowLocation)
           ],
         ),
       ),

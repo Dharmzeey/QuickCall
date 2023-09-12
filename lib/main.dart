@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:quickcall/api/get_location.dart';
 import 'package:quickcall/routes/routes.dart';
-import 'package:quickcall/screens/login_screen.dart';
-import 'package:quickcall/screens/signup_screen.dart';
+import 'package:quickcall/screens/onboarding_screen.dart';
 import 'package:quickcall/utils/colors.dart';
 
 void main() {
@@ -24,8 +22,7 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Inria Sans',
           scaffoldBackgroundColor: AppColors.bgColor),
       debugShowCheckedModeBanner: false,
-      // home: const HomePage(),
-      home: const LocationPage(),
+      home: const OnBoarding(),
       initialRoute: AppRoutes.initial,
       getPages: AppRoutes.routes,
     );

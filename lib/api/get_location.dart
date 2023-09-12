@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:quickcall/utils/colors.dart';
 
 class LocationPage extends StatefulWidget {
   const LocationPage({Key? key}) : super(key: key);
@@ -78,9 +79,14 @@ class _LocationPageState extends State<LocationPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('LAT: ${_currentPosition?.latitude ?? ""}'),
-              Text('LNG: ${_currentPosition?.longitude ?? ""}'),
-              Text('ADDRESS: ${_currentAddress ?? ""}'),
+              Text(
+                'LAT: ${_currentPosition?.latitude ?? ""}',
+                style: const TextStyle(color: AppColors.mainColor),
+              ),
+              Text('LNG: ${_currentPosition?.longitude ?? ""}',
+                  style: const TextStyle(color: AppColors.mainColor)),
+              Text('ADDRESS: ${_currentAddress ?? ""}',
+                  style: const TextStyle(color: AppColors.mainColor)),
               const SizedBox(height: 32),
               ElevatedButton(
                 onPressed: _getCurrentPosition,

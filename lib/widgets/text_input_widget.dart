@@ -51,3 +51,26 @@ class LoginTextInputWidget extends StatelessWidget {
     );
   }
 }
+
+class InfoTextInputWidget extends StatelessWidget {
+  const InfoTextInputWidget({super.key, required this.label});
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      decoration: InputDecoration(
+          enabledBorder: OutlineInputBorder(
+            borderSide:
+                const BorderSide(color: AppColors.mainColor, width: 1.0),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          label: Text(label),
+          labelStyle: TextStyle(
+              color: AppColors.mainColor,
+              fontSize: AppDimensions.font20,
+              fontWeight: FontWeight.w400),
+          border: const OutlineInputBorder()),
+    );
+  }
+}

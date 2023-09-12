@@ -5,7 +5,7 @@ import 'package:quickcall/utils/dimension.dart';
 import 'package:quickcall/widgets/account_created_or_not_widget.dart';
 import 'package:quickcall/widgets/auth_type_divide_widget.dart';
 import 'package:quickcall/widgets/google_auth_widget.dart';
-import 'package:quickcall/widgets/login_signup_button.dart';
+import 'package:quickcall/widgets/button_widgets.dart';
 import 'package:quickcall/widgets/text_input_widget.dart';
 
 class Login extends StatelessWidget {
@@ -84,7 +84,10 @@ class Login extends StatelessWidget {
             SizedBox(
               height: AppDimensions.spacing50,
             ),
-            const LoginSignupButton(text: "Log in"),
+            const ActionButton(
+              text: "Log in",
+              routeTo: AppRoutes.login,
+            ),
             SizedBox(
               height: AppDimensions.spacing50,
             ),
