@@ -13,6 +13,7 @@ class AppDimensions {
   static double paddingSmall = screenHeight / 79.4;
   static double paddingMain = screenWidth / 20;
 
+  static double spacing350 = screenHeight / 3.8;
   static double spacing250 = screenHeight / 5.4;
   static double spacing200 = screenHeight / 6.75;
   static double spacing150 = screenHeight / 9;

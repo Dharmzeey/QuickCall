@@ -87,6 +87,7 @@ class Login extends StatelessWidget {
             const ActionButton(
               text: "Log in",
               routeTo: AppRoutes.login,
+              isEnabled: true,
             ),
             SizedBox(
               height: AppDimensions.spacing50,

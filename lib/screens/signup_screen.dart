@@ -2,59 +2,114 @@ import 'package:flutter/material.dart';
 import 'package:quickcall/routes/routes.dart';
 import 'package:quickcall/utils/colors.dart';
 import 'package:quickcall/utils/dimension.dart';
-import 'package:quickcall/widgets/account_created_or_not_widget.dart';
 import 'package:quickcall/widgets/auth_type_divide_widget.dart';
 import 'package:quickcall/widgets/google_auth_widget.dart';
 import 'package:quickcall/widgets/button_widgets.dart';
 import 'package:quickcall/widgets/text_input_widget.dart';
 
-class SignUp extends StatelessWidget {
+class SignUp extends StatefulWidget {
   const SignUp({super.key});
+
+  @override
+  State<SignUp> createState() => _SignUpState();
+}
+
+class _SignUpState extends State<SignUp> {
+  final _formKey = GlobalKey<FormState>();
+  late final TextEditingController _username;
+  late final TextEditingController _password;
+  bool isEnabled = false;
+
+  void checkFieldValue(String username, String password) {
+    if (username.length > 3 && password.length > 5) {
+      setState(() {
+        isEnabled = true;
+      });
+    } else {
+      setState(() {
+        isEnabled = false;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _username = TextEditingController();
+    _password = TextEditingController();
+    _username.addListener(() {
+      checkFieldValue(_username.text, _password.text);
+    });
+    _password.addListener(() {
+      checkFieldValue(_username.text, _password.text);
+    });
+  }
+
+  @override
+  void dispose() {
+    _username.dispose();
+    _password.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Padding(
-        padding: EdgeInsets.all(AppDimensions.paddingMain),
-        child: Column(
-          // mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: AppDimensions.spacing200,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(AppDimensions.paddingMain),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: AppDimensions.spacing200,
+                ),
+                Container(
+                  height: AppDimensions.height120,
+                  width: AppDimensions.height120,
+                  decoration: const BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage("images/loggingin.png"),
+                          fit: BoxFit.contain)),
+                ),
+                SizedBox(
+                  height: AppDimensions.spacing20,
+                ),
+                Text(
+                  "SIGN UP",
+                  style: TextStyle(
+                      fontSize: AppDimensions.font24,
+                      color: AppColors.mainColor),
+                ),
+                SizedBox(
+                  height: AppDimensions.spacing20,
+                ),
+                InfoTextInputWidget(
+                  label: "Username",
+                  inputController: _username,
+                ),
+                SizedBox(height: AppDimensions.spacing30),
+                InfoTextInputWidget(
+                  label: "Password",
+                  inputController: _password,
+                ),
+                SizedBox(height: AppDimensions.spacing50),
+                const AuthTypeDivider(),
+                SizedBox(height: AppDimensions.spacing50),
+                const GoogleAuthWidget(label: "Continue with Google"),
+                SizedBox(
+                  height: AppDimensions.spacing350,
+                ),
+                ActionButton(
+                  text: "Next",
+                  routeTo: AppRoutes.allowLocation,
+                  isEnabled: isEnabled,
+                )
+              ],
             ),
-            Container(
-              height: AppDimensions.height120,
-              width: AppDimensions.height120,
-              decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage("images/loggingin.png"),
-                      fit: BoxFit.contain)),
-            ),
-            SizedBox(
-              height: AppDimensions.spacing20,
-            ),
-            Text(
-              "SIGN UP",
-              style: TextStyle(
-                  fontSize: AppDimensions.font24, color: AppColors.mainColor),
-            ),
-            SizedBox(
-              height: AppDimensions.spacing20,
-            ),
-            const SignUpTextInputWidget(label: "Username"),
-            SizedBox(height: AppDimensions.spacing30),
-            const SignUpTextInputWidget(label: "Password"),
-            SizedBox(height: AppDimensions.spacing50),
-            const AuthTypeDivider(),
-            SizedBox(height: AppDimensions.spacing50),
-            const GoogleAuthWidget(label: "Continue with Google"),
-            SizedBox(
-              height: AppDimensions.spacing250,
-            ),
-            const ActionButton(text: "Next", routeTo: AppRoutes.allowLocation)
-          ],
+          ),
         ),
       ),
     );

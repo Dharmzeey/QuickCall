@@ -20,9 +20,9 @@ class AppRoutes {
     GetPage(name: "/", page: () => const OnBoarding()),
     GetPage(name: login, page: () => const Login()),
     GetPage(name: signup, page: () => const SignUp()),
-    GetPage(name: allowLocation, page: () => const AllowLocation()),
+    GetPage(name: allowLocation, page: () => AllowLocation()),
     GetPage(name: medicalInformation, page: () => const MedicalInformation()),
-    GetPage(name: welcome, page: () => const WelcomeScreen()),
+    GetPage(name: welcome, page: () => WelcomeScreen()),
     GetPage(name: emergencyContact, page: () => const EmergencyContact()),
   ];
 }

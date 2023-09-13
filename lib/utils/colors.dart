@@ -6,5 +6,6 @@ class AppColors {
   static const Color secondaryColor = Colors.white70;
   static const Color buttonColor = Color.fromRGBO(0, 179, 255, 1);
   static const Color disabledButtonColor = Color.fromRGBO(0, 179, 255, 0.7);
+  static const Color disabledTextColor = Color.fromRGBO(225, 225, 255, 0.7);
   static const Color bgColor = Colors.black;
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:quickcall/routes/routes.dart';
-import 'package:quickcall/screens/first_signup_screen.dart';
 import 'package:quickcall/utils/colors.dart';
 import 'package:quickcall/utils/dimension.dart';
 import 'package:quickcall/widgets/button_widgets.dart';
@@ -49,6 +48,7 @@ class OnBoarding extends StatelessWidget {
                   const ActionButton(
                     text: "Continue",
                     routeTo: AppRoutes.signup,
+                    isEnabled: true,
                   )
                 ],
               ),

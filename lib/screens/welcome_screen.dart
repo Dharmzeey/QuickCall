@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:quickcall/controller/location_controller.dart';
 import 'package:quickcall/routes/routes.dart';
 import 'package:quickcall/utils/colors.dart';
 import 'package:quickcall/utils/dimension.dart';
 import 'package:quickcall/widgets/emergency_widget.dart';
 
 class WelcomeScreen extends StatelessWidget {
-  const WelcomeScreen({super.key});
+  WelcomeScreen({super.key});
+  final LocationController locationController = Get.put(LocationController());
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +28,7 @@ class WelcomeScreen extends StatelessWidget {
                   color: AppColors.mainColor,
                 ),
                 Text(
-                  "Ibadan North",
+                  locationController.localGovernment,
                   style: TextStyle(
                       fontSize: AppDimensions.font18,
                       color: AppColors.mainColor),
@@ -69,7 +72,7 @@ class WelcomeScreen extends StatelessWidget {
             ),
             const EmergencyWidget(
               imageUrl: "images/medics.png",
-              text: "MEDIACL",
+              text: "MEDICAL",
               bgColor: Color.fromRGBO(0, 56, 254, 1),
               routeTo: AppRoutes.emergencyContact,
             ),

@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:quickcall/routes/routes.dart';
-import 'package:quickcall/screens/login_screen.dart';
-import 'package:quickcall/screens/first_signup_screen.dart';
 import 'package:quickcall/utils/colors.dart';
 import 'package:quickcall/utils/dimension.dart';
 
