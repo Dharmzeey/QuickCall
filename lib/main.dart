@@ -1,26 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:quickcall/api/user_status_api.dart';
 import 'package:quickcall/routes/routes.dart';
+import 'package:quickcall/screens/medical_information_screen.dart';
 import 'package:quickcall/screens/onboarding_screen.dart';
+import 'package:quickcall/screens/personal_information_screen.dart';
+import 'package:quickcall/screens/signup_screen.dart';
+import 'package:quickcall/screens/welcome_screen.dart';
 import 'package:quickcall/utils/colors.dart';
+import 'helper/dependencies.dart' as dep;
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await dep.init();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+  final Future<bool> activationStatus = DeviceActivated().getActivationStatus();
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-          fontFamily: 'Inria Sans',
-          scaffoldBackgroundColor: AppColors.bgColor),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+        fontFamily: 'Inria Sans',
+        scaffoldBackgroundColor: AppColors.bgColor,
+      ),
       debugShowCheckedModeBanner: false,
-      home: const OnBoarding(),
+      home: FutureBuilder(
+        future: activationStatus,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else {
+            final bool isActivated = snapshot.data!;
+            return isActivated ? WelcomeScreen() : const OnBoarding();
+          }
+        },
+      ),
+      // home: const PersonalInformation(),
       initialRoute: AppRoutes.initial,
       getPages: AppRoutes.routes,
     );

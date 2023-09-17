@@ -25,7 +25,7 @@ class EnableLocation {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
         Get.snackbar("Permission Denied",
-            'Location permissions are denied, please allow to use app',
+            'Location permissions are denied, please enable location to use app',
             colorText: AppColors.mainColor);
         return false;
       }
@@ -41,21 +41,26 @@ class EnableLocation {
 
   Future<void> _setLocation() async {
     final hasPermission = await _handleLocationPermission();
+    print(hasPermission);
     if (!hasPermission) return;
     await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
-        .then((Position position) {
+        .then((Position position) async {
+      print("I am in set location");
       locationController.currentPosition = position.toString();
       _currentPosition = position;
-      _getAddressFromLatLng(_currentPosition!);
+      await _getAddressFromLatLng(_currentPosition!);
+      print("I just got long lat");
     }).catchError((e) {});
   }
 
   get setLocation => _setLocation();
+  get permissionStatus => _handleLocationPermission();
 
   Future<void> _getAddressFromLatLng(Position position) async {
     await placemarkFromCoordinates(
             _currentPosition!.latitude, _currentPosition!.longitude)
         .then((List<Placemark> placemarks) {
+      print("I am in long and lat");
       Placemark place = placemarks[0];
       locationController.hasPermission = true;
       locationController.localGovernment = '${place.subAdministrativeArea}';

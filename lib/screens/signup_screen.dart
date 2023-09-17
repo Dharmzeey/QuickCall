@@ -6,6 +6,7 @@ import 'package:quickcall/widgets/auth_type_divide_widget.dart';
 import 'package:quickcall/widgets/google_auth_widget.dart';
 import 'package:quickcall/widgets/button_widgets.dart';
 import 'package:quickcall/widgets/text_input_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -30,6 +31,12 @@ class _SignUpState extends State<SignUp> {
         isEnabled = false;
       });
     }
+  }
+
+  void _setActivationStatus() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setBool('isActivated', true);
+    pref.setString('authenticationStatus', 'anonymous');
   }
 
   @override
@@ -104,8 +111,19 @@ class _SignUpState extends State<SignUp> {
                 ),
                 ActionButton(
                   text: "Next",
-                  routeTo: AppRoutes.allowLocation,
+                  routeTo: AppRoutes.personalInformation,
                   isEnabled: isEnabled,
+                  isProcessing: false,
+                ),
+                SizedBox(
+                  height: AppDimensions.spacing10,
+                ),
+                ActionButton(
+                  text: 'Skip for Now',
+                  routeTo: AppRoutes.welcome,
+                  isEnabled: true,
+                  isProcessing: false,
+                  onPressedFunction: _setActivationStatus,
                 )
               ],
             ),

@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:quickcall/controller/location_controller.dart';
+import 'package:quickcall/routes/routes.dart';
+import 'package:quickcall/utils/colors.dart';
 import 'package:quickcall/utils/dimension.dart';
+import 'package:quickcall/utils/styles.dart';
 
-class EmergencyWidget extends StatelessWidget {
-  const EmergencyWidget(
-      {super.key, required this.text, required this.routeTo, required this.bgColor, required this.imageUrl});
+class EmergencyTypeWidget extends StatelessWidget {
+  EmergencyTypeWidget(
+      {super.key,
+      required this.text,
+      required this.bgColor,
+      required this.imageUrl,
+      required this.args});
   final String text;
   final Color bgColor;
   final String imageUrl;
-  final dynamic routeTo;
+  final Map<String, dynamic> args;
+
+  final LocationController locationController = Get.put(LocationController());
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +32,13 @@ class EmergencyWidget extends StatelessWidget {
           ),
           FilledButton(
             onPressed: () {
-              Get.toNamed(routeTo);
+              if (locationController.hasPermission) {
+                Get.toNamed(AppRoutes.emergencyInfo, arguments: args);
+              } else {
+                Get.snackbar(
+                    "Location Disabled", "Please enable location service",
+                    colorText: AppColors.mainColor);
+              }
             },
             style: FilledButton.styleFrom(
                 backgroundColor: bgColor,
@@ -41,4 +57,37 @@ class EmergencyWidget extends StatelessWidget {
   }
 }
 
+class EmergencyInfoWidget extends StatelessWidget {
+  const EmergencyInfoWidget(
+      {super.key,
+      required this.text,
+      required this.routeTo,
+      required this.args});
+  final String text;
+  final dynamic routeTo;
+  final Map<String, dynamic> args;
 
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(AppDimensions.paddingSmall),
+      child: FilledButton(
+        onPressed: () {
+          Get.toNamed(routeTo, arguments: args);
+        },
+        style: FilledButton.styleFrom(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5.0)),
+            backgroundColor: AppColors.mainColor,
+            padding: EdgeInsets.all(AppDimensions.paddingSmall),
+            minimumSize: Size(AppDimensions.screenWidth / 1.5,
+                AppDimensions.screenHeight / 30)),
+        child: Text(
+          text,
+          style: CustomTextStyles.primaryTextStyle
+              .copyWith(color: AppColors.bgColor),
+        ),
+      ),
+    );
+  }
+}

@@ -26,6 +26,7 @@ class AppDimensions {
   static double spacing10 = screenHeight / 135;
 
   static double height300 = screenHeight / 4.5;
+  static double height200 = screenHeight / 6.75;
   static double height120 = screenHeight / 11.25;
   static double height100 = screenHeight / 13.5;
 

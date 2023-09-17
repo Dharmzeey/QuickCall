@@ -47,8 +47,9 @@ class OnBoarding extends StatelessWidget {
                   ),
                   const ActionButton(
                     text: "Continue",
-                    routeTo: AppRoutes.signup,
+                    routeTo: AppRoutes.allowLocation,
                     isEnabled: true,
+                    isProcessing: false,
                   )
                 ],
               ),

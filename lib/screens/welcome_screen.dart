@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quickcall/controller/location_controller.dart';
-import 'package:quickcall/routes/routes.dart';
 import 'package:quickcall/utils/colors.dart';
 import 'package:quickcall/utils/dimension.dart';
 import 'package:quickcall/widgets/emergency_widget.dart';
@@ -22,18 +21,31 @@ class WelcomeScreen extends StatelessWidget {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                const Icon(
-                  Icons.location_on_outlined,
-                  color: AppColors.mainColor,
-                ),
-                Text(
-                  locationController.localGovernment,
-                  style: TextStyle(
-                      fontSize: AppDimensions.font18,
-                      color: AppColors.mainColor),
-                )
-              ],
+              children: locationController.hasPermission
+                  ? [
+                      const Icon(
+                        Icons.location_on_outlined,
+                        color: AppColors.mainColor,
+                      ),
+                      Text(
+                        locationController.localGovernment,
+                        style: TextStyle(
+                            fontSize: AppDimensions.font18,
+                            color: AppColors.mainColor),
+                      )
+                    ]
+                  : [
+                      const Icon(
+                        Icons.location_off_outlined,
+                        color: AppColors.mainColor,
+                      ),
+                      Text(
+                        'Location Service Unavailable',
+                        style: TextStyle(
+                            fontSize: AppDimensions.font18,
+                            color: AppColors.mainColor),
+                      )
+                    ],
             ),
             SizedBox(
               height: AppDimensions.spacing100,
@@ -61,29 +73,44 @@ class WelcomeScreen extends StatelessWidget {
             SizedBox(
               height: AppDimensions.spacing50,
             ),
-            const EmergencyWidget(
+            EmergencyTypeWidget(
               imageUrl: "images/police.png",
               text: "POLICE",
-              bgColor: Color.fromRGBO(55, 55, 55, 1),
-              routeTo: AppRoutes.emergencyContact,
+              bgColor: const Color.fromRGBO(55, 55, 55, 1),
+              args: const {
+                'emergencyType': 'Police Emergency',
+                'helpNearYou': 'Police Stations near you',
+                'emergencyTip': 'Things you can do during police emergency',
+                'emergencyIcon': 'images/police_device.png'
+              },
             ),
             SizedBox(
               height: AppDimensions.spacing30,
             ),
-            const EmergencyWidget(
+            EmergencyTypeWidget(
               imageUrl: "images/medics.png",
               text: "MEDICAL",
-              bgColor: Color.fromRGBO(0, 56, 254, 1),
-              routeTo: AppRoutes.emergencyContact,
+              bgColor: const Color.fromRGBO(0, 56, 254, 1),
+              args:const {
+                'emergencyType': 'Medical Emergency',
+                'helpNearYou': 'Hospitals near you',
+                'emergencyTip': 'First aid tips for emergency situations',
+                'emergencyIcon': 'images/medical_insurance.png'
+              }
             ),
             SizedBox(
               height: AppDimensions.spacing30,
             ),
-            const EmergencyWidget(
+            EmergencyTypeWidget(
               imageUrl: "images/fire.png",
               text: "FIRE",
-              bgColor: Color.fromRGBO(254, 0, 0, 1),
-              routeTo: AppRoutes.emergencyContact,
+              bgColor: const Color.fromRGBO(254, 0, 0, 1),
+              args: const {
+                'emergencyType': 'Fire Emergency',
+                'helpNearYou': 'Fire Stations near you',
+                'emergencyTip': 'Tips to prevent and handle fire outbreak',
+                'emergencyIcon': 'images/fire_extinguish.png'
+              },
             )
           ],
         ),

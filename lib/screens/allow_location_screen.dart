@@ -5,15 +5,32 @@ import 'package:quickcall/controller/location_controller.dart';
 import 'package:quickcall/routes/routes.dart';
 import 'package:quickcall/utils/colors.dart';
 import 'package:quickcall/utils/dimension.dart';
-import 'package:quickcall/widgets/button_widgets.dart';
 
-class AllowLocation extends StatelessWidget {
-  AllowLocation({super.key});
+class AllowLocation extends StatefulWidget {
+  const AllowLocation({super.key});
+
+  @override
+  State<AllowLocation> createState() => _AllowLocationState();
+}
+
+class _AllowLocationState extends State<AllowLocation> {
   final LocationController locationController = Get.put(LocationController());
 
-  _triggerLocation() async {
-    await EnableLocation().setLocation;
+  bool _isProcessing = false;
+  bool _isEnabled = true;
 
+  _triggerLocation() async {
+    print("I am in trigger");
+    setState(() {
+      _isProcessing = true;
+      _isEnabled = false;
+    });
+    await EnableLocation().setLocation;
+    setState(() {
+      print("I just exit trigger");
+      _isProcessing = false;
+      _isEnabled = true;
+    });
   }
 
   @override
@@ -55,14 +72,45 @@ class AllowLocation extends StatelessWidget {
             SizedBox(
               height: AppDimensions.spacing350,
             ),
-            ActionButton(
-              text: "Enable",
-              routeTo: locationController.hasPermission
-                  ? AppRoutes.medicalInformation
-                  : AppRoutes.allowLocation,
-              isEnabled: true,
-              onPressedFunction: _triggerLocation,
-            )
+            FilledButton(
+                onPressed: () async {
+                  if (!locationController.hasPermission) {
+                    null;
+                  } else if (locationController.hasPermission) {
+                    Get.offAndToNamed(AppRoutes.signup);
+                  } else if (_isEnabled) {
+                    await _triggerLocation();
+                  }
+                },
+                style: FilledButton.styleFrom(
+                  backgroundColor: _isEnabled
+                      ? AppColors.buttonColor
+                      : AppColors.disabledButtonColor,
+                  padding: EdgeInsets.all(AppDimensions.paddingSmall),
+                  minimumSize: Size(AppDimensions.screenWidth / 2,
+                      AppDimensions.screenHeight / 30),
+                ),
+                child: _isProcessing
+                    ? const CircularProgressIndicator()
+                    : (locationController.hasPermission
+                        ? Text(
+                            "Enable",
+                            style: TextStyle(
+                              fontSize: AppDimensions.font20,
+                              fontWeight: FontWeight.w400,
+                              color: _isEnabled
+                                  ? AppColors.mainColor
+                                  : AppColors.disabledTextColor,
+                            ),
+                          )
+                        : Text(
+                            "Location permission denied",
+                            style: TextStyle(
+                              fontSize: AppDimensions.font20,
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.disabledTextColor,
+                            ),
+                          ))),
           ],
         ),
       ),

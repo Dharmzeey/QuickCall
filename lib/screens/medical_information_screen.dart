@@ -14,67 +14,38 @@ class MedicalInformation extends StatefulWidget {
 
 class _MedicalInformationState extends State<MedicalInformation> {
   final _formkey = GlobalKey<FormState>();
-  late final TextEditingController _age;
-  late final TextEditingController _gender;
   late final TextEditingController _bloodGroup;
   late final TextEditingController _genotype;
   late final TextEditingController _allergies;
   late final TextEditingController _otherConditions;
-  bool isEnabled = false;
-
-  void checkFieldValue(
-      String age, String gender, String bloodGroup, String genotype) {
-    if (age.length > 1 &&
-        gender.length > 3 &&
-        bloodGroup.isNotEmpty &&
-        genotype.isNotEmpty) {
-      setState(() {
-        isEnabled = true;
-      });
-    } else {
-      setState(() {
-        isEnabled = false;
-      });
-    }
-  }
+  bool _isEnabled = false;
 
   @override
   void initState() {
-    _age = TextEditingController();
-    _gender = TextEditingController();
     _bloodGroup = TextEditingController();
     _genotype = TextEditingController();
     _allergies = TextEditingController();
     _otherConditions = TextEditingController();
 
-    _age.addListener(() {
-      checkFieldValue(
-          _age.text, _gender.text, _bloodGroup.text, _genotype.text);
-    });
-    _gender.addListener(() {
-      checkFieldValue(
-          _age.text, _gender.text, _bloodGroup.text, _genotype.text);
-    });
     _bloodGroup.addListener(() {
-      checkFieldValue(
-          _age.text, _gender.text, _bloodGroup.text, _genotype.text);
+      checkFieldValue();
     });
     _genotype.addListener(() {
-      checkFieldValue(
-          _age.text, _gender.text, _bloodGroup.text, _genotype.text);
+      checkFieldValue();
     });
     super.initState();
   }
 
-  @override
-  void dispose() {
-    _age.dispose();
-    _gender.dispose();
-    _bloodGroup.dispose();
-    _genotype.dispose();
-    _allergies.dispose();
-    _otherConditions.dispose();
-    super.dispose();
+  void checkFieldValue() {
+    if (_bloodGroup.text.isNotEmpty && _genotype.text.isNotEmpty) {
+      setState(() {
+        _isEnabled = true;
+      });
+    } else {
+      setState(() {
+        _isEnabled = false;
+      });
+    }
   }
 
   @override
@@ -98,7 +69,7 @@ class _MedicalInformationState extends State<MedicalInformation> {
                         color: AppColors.mainColor),
                   ),
                   Container(
-                    height: AppDimensions.height100,
+                    height: AppDimensions.height200,
                     decoration: const BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage("images/medical.png"),
@@ -121,23 +92,6 @@ class _MedicalInformationState extends State<MedicalInformation> {
                   ),
                   SizedBox(
                     height: AppDimensions.spacing20,
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                          child: InfoTextInputWidget(
-                        label: "Age",
-                        inputController: _age,
-                      )),
-                      SizedBox(
-                        width: AppDimensions.spacing10,
-                      ),
-                      Expanded(
-                          child: InfoTextInputWidget(
-                        label: "Gender",
-                        inputController: _gender,
-                      ))
-                    ],
                   ),
                   SizedBox(
                     height: AppDimensions.spacing20,
@@ -170,18 +124,20 @@ class _MedicalInformationState extends State<MedicalInformation> {
                   SizedBox(
                     height: AppDimensions.spacing200,
                   ),
-                  const ActionButton(
-                    text: "Skip",
-                    routeTo: AppRoutes.welcome,
-                    isEnabled: true,
-                  ),
+                  // const ActionButton(
+                  //   text: "Skip",
+                  //   routeTo: AppRoutes.welcome,
+                  //   isEnabled: true,
+                  //   isProcessing: false,
+                  // ),
                   SizedBox(
                     height: AppDimensions.spacing20,
                   ),
                   ActionButton(
                     text: "Continue",
                     routeTo: AppRoutes.welcome,
-                    isEnabled: isEnabled,
+                    isEnabled: _isEnabled,
+                    isProcessing: false,
                   ),
                 ],
               ),
@@ -190,5 +146,14 @@ class _MedicalInformationState extends State<MedicalInformation> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _bloodGroup.dispose();
+    _genotype.dispose();
+    _allergies.dispose();
+    _otherConditions.dispose();
+    super.dispose();
   }
 }

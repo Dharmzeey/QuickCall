@@ -88,6 +88,7 @@ class Login extends StatelessWidget {
               text: "Log in",
               routeTo: AppRoutes.login,
               isEnabled: true,
+              isProcessing: false,
             ),
             SizedBox(
               height: AppDimensions.spacing50,
