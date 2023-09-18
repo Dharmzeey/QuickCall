@@ -10,6 +10,8 @@ class AppDimensions {
   static double font18 = screenHeight / 75;
   static double font15 = screenHeight / 90;
 
+  static double icon15 = screenHeight / 90;
+
   static double paddingSmall = screenHeight / 79.4;
   static double paddingMain = screenWidth / 20;
 
@@ -24,6 +26,7 @@ class AppDimensions {
   static double spacing30 = screenHeight / 45;
   static double spacing20 = screenHeight / 67.5;
   static double spacing10 = screenHeight / 135;
+  static double spacing5 = screenHeight / 270;
 
   static double height300 = screenHeight / 4.5;
   static double height200 = screenHeight / 6.75;
@@ -33,6 +36,8 @@ class AppDimensions {
   static double width350 = screenWidth / 1.42;
   static double width250 = screenWidth / 2;
   static double width225 = screenWidth / 2.2;
+
+  static double size40 = screenWidth / 12.5;
 
   static double divideBy14 = screenWidth / 14;
 }

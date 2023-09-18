@@ -8,4 +8,6 @@ class AppColors {
   static const Color disabledButtonColor = Color.fromRGBO(0, 179, 255, 0.7);
   static const Color disabledTextColor = Color.fromRGBO(225, 225, 255, 0.7);
   static const Color bgColor = Colors.black;
+
+  static const Color iconMainColor = Colors.black;
 }

@@ -20,7 +20,6 @@ class _PersonalInformationState extends State<PersonalInformation> {
   late final TextEditingController _email;
   late final TextEditingController _phoneNumber;
   late final TextEditingController _age;
-  late final TextEditingController _gender;
   late final TextEditingController _emergencyContact;
   late final TextEditingController _emergencyContactrelationship;
   late final TextEditingController _emergencyContactphoneNumber;
@@ -36,7 +35,6 @@ class _PersonalInformationState extends State<PersonalInformation> {
     _email = TextEditingController();
     _phoneNumber = TextEditingController();
     _age = TextEditingController();
-    _gender = TextEditingController();
     _emergencyContact = TextEditingController();
     _emergencyContactrelationship = TextEditingController();
     _emergencyContactphoneNumber = TextEditingController();
@@ -56,9 +54,6 @@ class _PersonalInformationState extends State<PersonalInformation> {
     _age.addListener(() {
       _checkFieldValue();
     });
-    _gender.addListener(() {
-      _checkFieldValue();
-    });
     _emergencyContact.addListener(() {
       _checkFieldValue();
     });
@@ -76,7 +71,6 @@ class _PersonalInformationState extends State<PersonalInformation> {
         _email.text.length > 12 &&
         _phoneNumber.text.length > 10 &&
         _age.text.length > 1 &&
-        _gender.text.length > 3 &&
         _emergencyContact.text.length > 10 &&
         _emergencyContactrelationship.text.length > 3 &&
         _emergencyContactphoneNumber.text.length > 10) {
@@ -234,7 +228,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
     _email.dispose();
     _phoneNumber.dispose();
     _age.dispose();
-    _gender.dispose();
+
     _emergencyContact.dispose();
     _emergencyContactrelationship.dispose();
     _emergencyContactphoneNumber.dispose();

@@ -62,7 +62,9 @@ class EmergencyInfoWidget extends StatelessWidget {
       {super.key,
       required this.text,
       required this.routeTo,
-      required this.args});
+      required this.args,
+      required this.iconToShow});
+  final dynamic iconToShow;
   final String text;
   final dynamic routeTo;
   final Map<String, dynamic> args;
@@ -72,22 +74,27 @@ class EmergencyInfoWidget extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(AppDimensions.paddingSmall),
       child: FilledButton(
-        onPressed: () {
-          Get.toNamed(routeTo, arguments: args);
-        },
-        style: FilledButton.styleFrom(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5.0)),
-            backgroundColor: AppColors.mainColor,
-            padding: EdgeInsets.all(AppDimensions.paddingSmall),
-            minimumSize: Size(AppDimensions.screenWidth / 1.5,
-                AppDimensions.screenHeight / 30)),
-        child: Text(
-          text,
-          style: CustomTextStyles.primaryTextStyle
-              .copyWith(color: AppColors.bgColor),
-        ),
-      ),
+          onPressed: () {
+            Get.toNamed(routeTo, arguments: args);
+          },
+          style: FilledButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5.0)),
+              backgroundColor: AppColors.mainColor,
+              padding: EdgeInsets.all(AppDimensions.paddingSmall),
+              minimumSize: Size(AppDimensions.screenWidth / 1.5,
+                  AppDimensions.screenHeight / 30)),
+          child: Row(
+            children: [
+              iconToShow,
+              SizedBox(width: AppDimensions.spacing10),
+              Text(
+                text,
+                style: CustomTextStyles.primaryTextStyle
+                    .copyWith(color: AppColors.bgColor),
+              ),
+            ],
+          )),
     );
   }
 }

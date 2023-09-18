@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:quickcall/screens/allow_location_screen.dart';
-import 'package:quickcall/screens/emergency_contact_screen.dart';
+import 'package:quickcall/screens/officials_contact_screen.dart';
 import 'package:quickcall/screens/emergency_info_screen.dart';
 import 'package:quickcall/screens/emergency_tips.dart';
 import 'package:quickcall/screens/login_screen.dart';
@@ -21,7 +21,7 @@ class AppRoutes {
   static const String welcome = "/welcome";
   static const String emergencyInfo = "/emergency-info";
   static const String proximalEmergencyPlaces = "/proximal-emergency-places";
-  static const String emergencyContact = "/emergency-contact";
+  static const String officialsContact = "/emergency-contact";
   static const String emergencyTips = "/emergency-tips";
 
   static List<GetPage> routes = [
@@ -33,8 +33,10 @@ class AppRoutes {
     GetPage(name: medicalInformation, page: () => const MedicalInformation()),
     GetPage(name: welcome, page: () => WelcomeScreen()),
     GetPage(name: emergencyInfo, page: () => const EmergencyInformation()),
-    GetPage(name: proximalEmergencyPlaces, page: () => const ProximalEmergencyPlaces()),
-    GetPage(name: emergencyContact, page: () => EmergencyContact()),
+    GetPage(
+        name: proximalEmergencyPlaces,
+        page: () => const ProximalEmergencyPlaces()),
+    GetPage(name: officialsContact, page: () => OfficialsContact()),
     GetPage(name: emergencyTips, page: () => const EmergencyTips()),
   ];
 }

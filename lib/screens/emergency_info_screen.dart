@@ -22,7 +22,9 @@ class EmergencyInformation extends StatelessWidget {
     final dynamic arguments = Get.arguments;
     final String emergencyType = arguments['emergencyType'];
     final String helpNearYou = arguments['helpNearYou'];
+    final dynamic helpNearYouIcon = arguments['helpNearYouIcon'];
     final String emergencyTip = arguments['emergencyTip'];
+    final dynamic emergencyTipIcon = arguments['emergencyTipIcon'];
     final String emergencyIcon = arguments['emergencyIcon'];
     return Scaffold(
       appBar: AppBar(
@@ -42,25 +44,31 @@ class EmergencyInformation extends StatelessWidget {
                 height: AppDimensions.spacing150,
               ),
               EmergencyInfoWidget(
+                iconToShow: helpNearYouIcon,
                 text: helpNearYou,
                 routeTo: AppRoutes.proximalEmergencyPlaces,
-                args: {'number': Dummies.police, 'title': helpNearYou},
+                args: {'nearestHelp': Dummies.stations, 'title': helpNearYou},
               ),
               SizedBox(
                 height: AppDimensions.spacing20,
               ),
               const EmergencyInfoWidget(
+                iconToShow: Icon(
+                  Icons.person,
+                  color: AppColors.bgColor,
+                ),
                 text: "Officials you can contact",
-                routeTo: AppRoutes.emergencyContact,
-                args: {'number': Dummies.police},
+                routeTo: AppRoutes.officialsContact,
+                args: {'officials': Dummies.officials},
               ),
               SizedBox(
                 height: AppDimensions.spacing20,
               ),
               EmergencyInfoWidget(
+                iconToShow: emergencyTipIcon,
                 text: emergencyTip,
                 routeTo: AppRoutes.emergencyTips,
-                args: {'tips': Dummies.tips, 'title':emergencyTip},
+                args: {'tips': Dummies.emergencyTips, 'title': emergencyTip},
               ),
               SizedBox(
                 height: AppDimensions.spacing100,

@@ -110,21 +110,21 @@ class _SignUpState extends State<SignUp> {
                   height: AppDimensions.spacing350,
                 ),
                 ActionButton(
-                  text: "Next",
-                  routeTo: AppRoutes.personalInformation,
-                  isEnabled: isEnabled,
-                  isProcessing: false,
-                ),
-                SizedBox(
-                  height: AppDimensions.spacing10,
-                ),
-                ActionButton(
                   text: 'Skip for Now',
                   routeTo: AppRoutes.welcome,
                   isEnabled: true,
                   isProcessing: false,
                   onPressedFunction: _setActivationStatus,
-                )
+                ),
+                SizedBox(
+                  height: AppDimensions.spacing10,
+                ),
+                ActionButton(
+                  text: "Next",
+                  routeTo: AppRoutes.personalInformation,
+                  isEnabled: isEnabled,
+                  isProcessing: false,
+                ),
               ],
             ),
           ),
