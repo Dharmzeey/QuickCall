@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:quickcall/api/information.dart';
 import 'package:quickcall/routes/routes.dart';
 import 'package:quickcall/utils/colors.dart';
 import 'package:quickcall/utils/dimension.dart';
@@ -16,22 +18,24 @@ class PersonalInformation extends StatefulWidget {
 class _PersonalInformationState extends State<PersonalInformation> {
   final _formKey = GlobalKey<FormState>();
   late final TextEditingController _firstName;
-  late final TextEditingController _surname;
+  late final TextEditingController _lastName;
   late final TextEditingController _email;
   late final TextEditingController _phoneNumber;
   late final TextEditingController _age;
   late final TextEditingController _emergencyContact;
   late final TextEditingController _emergencyContactrelationship;
   late final TextEditingController _emergencyContactphoneNumber;
-  bool _isEnabled = false;
+  bool isEnabled = false;
+  bool isProcessing = false;
   String? _selectedGender;
+  bool isGenderSelected = false;
   final List<String> _genders = ['Male', 'Female'];
 
   @override
   void initState() {
     super.initState();
     _firstName = TextEditingController();
-    _surname = TextEditingController();
+    _lastName = TextEditingController();
     _email = TextEditingController();
     _phoneNumber = TextEditingController();
     _age = TextEditingController();
@@ -42,7 +46,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
     _firstName.addListener(() {
       _checkFieldValue();
     });
-    _surname.addListener(() {
+    _lastName.addListener(() {
       _checkFieldValue();
     });
     _email.addListener(() {
@@ -54,32 +58,21 @@ class _PersonalInformationState extends State<PersonalInformation> {
     _age.addListener(() {
       _checkFieldValue();
     });
-    _emergencyContact.addListener(() {
-      _checkFieldValue();
-    });
-    _emergencyContactrelationship.addListener(() {
-      _checkFieldValue();
-    });
-    _emergencyContactphoneNumber.addListener(() {
-      _checkFieldValue();
-    });
   }
 
   void _checkFieldValue() {
     if (_firstName.text.length > 2 &&
-        _surname.text.length > 2 &&
+        _lastName.text.length > 2 &&
         _email.text.length > 12 &&
         _phoneNumber.text.length > 10 &&
         _age.text.length > 1 &&
-        _emergencyContact.text.length > 10 &&
-        _emergencyContactrelationship.text.length > 3 &&
-        _emergencyContactphoneNumber.text.length > 10) {
+        isGenderSelected) {
       setState(() {
-        _isEnabled = true;
+        isEnabled = true;
       });
     } else {
       setState(() {
-        _isEnabled = false;
+        isEnabled = false;
       });
     }
   }
@@ -119,7 +112,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                       ),
                       Expanded(
                           child: InfoTextInputWidget(
-                        inputController: _surname,
+                        inputController: _lastName,
                         label: "Surname",
                       ))
                     ],
@@ -153,6 +146,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                           onChanged: (value) {
                             setState(() {
                               _selectedGender = value;
+                              isGenderSelected = true;
                             });
                           },
                           items: _genders.map((gender) {
@@ -208,9 +202,9 @@ class _PersonalInformationState extends State<PersonalInformation> {
                   ),
                   ActionButton(
                     text: "Continue",
-                    isEnabled: _isEnabled,
-                    routeTo: AppRoutes.medicalInformation,
+                    isEnabled: isEnabled,
                     isProcessing: false,
+                    onPressedFunction: createBasicInfo,
                   )
                 ],
               ),
@@ -224,7 +218,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
   @override
   void dispose() {
     _firstName.dispose();
-    _surname.dispose();
+    _lastName.dispose();
     _email.dispose();
     _phoneNumber.dispose();
     _age.dispose();
@@ -233,5 +227,29 @@ class _PersonalInformationState extends State<PersonalInformation> {
     _emergencyContactrelationship.dispose();
     _emergencyContactphoneNumber.dispose();
     super.dispose();
+  }
+
+  Future<void> createBasicInfo() async {
+    setState(() {
+      isProcessing = true;
+      isEnabled = false;
+    });
+    final bool createInfoResponse = await UserInfo().submitPersonalInfo(
+        _firstName,
+        _lastName,
+        _email,
+        _phoneNumber,
+        _selectedGender!,
+        _age,
+        _emergencyContact,
+        _emergencyContactrelationship,
+        _emergencyContactphoneNumber);
+    if (createInfoResponse) {
+      Get.offAndToNamed(AppRoutes.medicalInformation);
+    } else {}
+    setState(() {
+      isProcessing = false;
+      isEnabled = true;
+    });
   }
 }

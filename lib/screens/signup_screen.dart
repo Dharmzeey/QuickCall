@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:quickcall/api/authentication.dart';
 import 'package:quickcall/routes/routes.dart';
 import 'package:quickcall/utils/colors.dart';
 import 'package:quickcall/utils/dimension.dart';
@@ -20,6 +22,7 @@ class _SignUpState extends State<SignUp> {
   late final TextEditingController _username;
   late final TextEditingController _password;
   bool isEnabled = false;
+  bool isProcessing = false;
 
   void checkFieldValue(String username, String password) {
     if (username.length > 3 && password.length > 5) {
@@ -37,6 +40,7 @@ class _SignUpState extends State<SignUp> {
     SharedPreferences pref = await SharedPreferences.getInstance();
     pref.setBool('isActivated', true);
     pref.setString('authenticationStatus', 'anonymous');
+    Get.offAndToNamed(AppRoutes.welcome);
   }
 
   @override
@@ -111,7 +115,6 @@ class _SignUpState extends State<SignUp> {
                 ),
                 ActionButton(
                   text: 'Skip for Now',
-                  routeTo: AppRoutes.welcome,
                   isEnabled: true,
                   isProcessing: false,
                   onPressedFunction: _setActivationStatus,
@@ -121,9 +124,9 @@ class _SignUpState extends State<SignUp> {
                 ),
                 ActionButton(
                   text: "Next",
-                  routeTo: AppRoutes.personalInformation,
                   isEnabled: isEnabled,
                   isProcessing: false,
+                  onPressedFunction: createUser,
                 ),
               ],
             ),
@@ -131,5 +134,21 @@ class _SignUpState extends State<SignUp> {
         ),
       ),
     );
+  }
+
+  Future<void> createUser() async {
+    setState(() {
+      isProcessing = true;
+      isEnabled = false;
+    });
+    final bool signUpResponse =
+        await Authentication().signUp(_username, _password);
+    if (signUpResponse) {
+      Get.offAndToNamed(AppRoutes.personalInformation);
+    } else {}
+    setState(() {
+      isProcessing = false;
+      isEnabled = true;
+    });
   }
 }

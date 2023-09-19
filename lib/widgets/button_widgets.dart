@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:quickcall/utils/colors.dart';
 import 'package:quickcall/utils/dimension.dart';
 
@@ -7,13 +6,11 @@ class ActionButton extends StatelessWidget {
   const ActionButton({
     super.key,
     required this.text,
-    required this.routeTo,
     required this.isEnabled,
     this.onPressedFunction,
     required this.isProcessing,
   });
   final String text;
-  final dynamic routeTo;
   final bool isEnabled;
   final dynamic onPressedFunction;
   final bool isProcessing;
@@ -22,12 +19,9 @@ class ActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FilledButton(
       onPressed: () async {
-        if (isEnabled) {
-          if (onPressedFunction != null) {
-            await onPressedFunction();
-          }
+        if (isEnabled && onPressedFunction != null) {
+          await onPressedFunction();
         } else {}
-        isEnabled ? Get.toNamed(routeTo) : null;
       },
       style: FilledButton.styleFrom(
         backgroundColor:
@@ -50,5 +44,3 @@ class ActionButton extends StatelessWidget {
     );
   }
 }
-
-

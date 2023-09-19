@@ -7,10 +7,7 @@ Future<void> init() async {
   // Get.lazyPut(() => EnableLocation().setLocation);
   try {
     await EnableLocation().setLocation;
-  } catch (e) {
-    print("I failed");
-    print(e.toString());
-  }
+  } catch (e) {}
 
   // Controller
   Get.put(LocationController());

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:quickcall/api/information.dart';
 import 'package:quickcall/routes/routes.dart';
 import 'package:quickcall/utils/colors.dart';
 import 'package:quickcall/utils/dimension.dart';
@@ -18,7 +20,9 @@ class _MedicalInformationState extends State<MedicalInformation> {
   late final TextEditingController _genotype;
   late final TextEditingController _allergies;
   late final TextEditingController _otherConditions;
-  bool _isEnabled = false;
+  late final TextEditingController _familyDoctorContact;
+  bool isEnabled = false;
+  bool isProcessing = false;
 
   @override
   void initState() {
@@ -26,6 +30,7 @@ class _MedicalInformationState extends State<MedicalInformation> {
     _genotype = TextEditingController();
     _allergies = TextEditingController();
     _otherConditions = TextEditingController();
+    _familyDoctorContact = TextEditingController();
 
     _bloodGroup.addListener(() {
       checkFieldValue();
@@ -39,11 +44,11 @@ class _MedicalInformationState extends State<MedicalInformation> {
   void checkFieldValue() {
     if (_bloodGroup.text.isNotEmpty && _genotype.text.isNotEmpty) {
       setState(() {
-        _isEnabled = true;
+        isEnabled = true;
       });
     } else {
       setState(() {
-        _isEnabled = false;
+        isEnabled = false;
       });
     }
   }
@@ -122,6 +127,13 @@ class _MedicalInformationState extends State<MedicalInformation> {
                     inputController: _otherConditions,
                   ),
                   SizedBox(
+                    height: AppDimensions.spacing20,
+                  ),
+                  InfoTextInputWidget(
+                    label: "Family Doctor Contact",
+                    inputController: _familyDoctorContact,
+                  ),
+                  SizedBox(
                     height: AppDimensions.spacing200,
                   ),
                   // const ActionButton(
@@ -135,8 +147,7 @@ class _MedicalInformationState extends State<MedicalInformation> {
                   ),
                   ActionButton(
                     text: "Continue",
-                    routeTo: AppRoutes.welcome,
-                    isEnabled: _isEnabled,
+                    isEnabled: isEnabled,
                     isProcessing: false,
                   ),
                 ],
@@ -154,6 +165,28 @@ class _MedicalInformationState extends State<MedicalInformation> {
     _genotype.dispose();
     _allergies.dispose();
     _otherConditions.dispose();
+    _familyDoctorContact.dispose();
     super.dispose();
+  }
+
+  Future<void> createBasicInfo() async {
+    setState(() {
+      isProcessing = true;
+      isEnabled = false;
+    });
+    final bool createInfoResponse = await UserInfo().submitMedicalInfo(
+        _bloodGroup,
+        _genotype,
+        _allergies,
+        _otherConditions,
+        _familyDoctorContact,
+   );
+    if (createInfoResponse) {
+      Get.offAndToNamed(AppRoutes.welcome);
+    } else {}
+    setState(() {
+      isProcessing = true;
+      isEnabled = false;
+    });
   }
 }
