@@ -41,29 +41,48 @@ class ProximalEmergencyPlaces extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          nearestHelp[index][0],
-                          style: TextStyle(fontSize: AppDimensions.font15),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: AppDimensions.screenWidth / 1.3,
+                              child: Text(
+                                nearestHelp[index].name,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                style:
+                                    TextStyle(fontSize: AppDimensions.font20),
+                              ),
+                            ),
+                            SizedBox(
+                              width: AppDimensions.screenWidth / 1.3,
+                              child: Text(
+                                nearestHelp[index].vicinity,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                style:
+                                    TextStyle(fontSize: AppDimensions.font15),
+                              ),
+                            ),
+                          ],
                         ),
                         Row(
                           children: [
                             IconButton(
                               onPressed: () async {
-                                double lat =
-                                    double.parse(nearestHelp[index][1]);
-                                double lng =
-                                    double.parse(nearestHelp[index][2]);
+                                double lat = nearestHelp[index].lat;
+                                double lng = nearestHelp[index].lng;
 
                                 await openGoogleMaps(lat, lng);
                               },
                               icon: const Icon(Icons.call_split_outlined),
                             ),
-                            IconButton(
-                              onPressed: () {
-                                openPhoneDialer(nearestHelp[index][3]);
-                              },
-                              icon: const Icon(Icons.wifi_calling_3_sharp),
-                            )
+                            // IconButton(
+                            //   onPressed: () {
+                            //     openPhoneDialer(nearestHelp[index][3]);
+                            //   },
+                            //   icon: const Icon(Icons.wifi_calling_3_sharp),
+                            // )
                           ],
                         )
                       ],

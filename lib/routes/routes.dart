@@ -1,33 +1,35 @@
 import 'package:get/get.dart';
-import 'package:quickcall/screens/allow_location_screen.dart';
-import 'package:quickcall/screens/officials_contact_screen.dart';
-import 'package:quickcall/screens/emergency_info_screen.dart';
-import 'package:quickcall/screens/emergency_tips.dart';
-import 'package:quickcall/screens/login_screen.dart';
-import 'package:quickcall/screens/medical_information_screen.dart';
-import 'package:quickcall/screens/onboarding_screen.dart';
-import 'package:quickcall/screens/personal_information_screen.dart';
-import 'package:quickcall/screens/proximal_emergency_places.dart';
-import 'package:quickcall/screens/signup_screen.dart';
-import 'package:quickcall/screens/welcome_screen.dart';
+import 'package:quickcall/screens/onboarding/allow_location_screen.dart';
+import 'package:quickcall/screens/emergency/emergency_info_screen.dart';
+import 'package:quickcall/screens/emergency/emergency_lines.dart';
+import 'package:quickcall/screens/emergency/emergency_tips.dart';
+import 'package:quickcall/screens/emergency/officials_contact_screen.dart';
+import 'package:quickcall/screens/onboarding/login_screen.dart';
+import 'package:quickcall/screens/onboarding/medical_information_screen.dart';
+import 'package:quickcall/screens/onboarding/onboarding_screen.dart';
+import 'package:quickcall/screens/onboarding/personal_information_screen.dart';
+import 'package:quickcall/screens/emergency/proximal_emergency_places.dart';
+import 'package:quickcall/screens/onboarding/signup_screen.dart';
+import 'package:quickcall/screens/emergency/welcome_screen.dart';
 
 class AppRoutes {
   static const String initial = "/";
-  static const String login = "/login";
-  static const String signup = "/signup";
+  static const String signIn = "/login";
+  static const String signUp = "/signup";
   static const String allowLocation = "/allow-location";
   static const String personalInformation = "/personal-information";
   static const String medicalInformation = "/medical-information";
   static const String welcome = "/welcome";
   static const String emergencyInfo = "/emergency-info";
   static const String proximalEmergencyPlaces = "/proximal-emergency-places";
-  static const String officialsContact = "/emergency-contact";
+  static const String emergencyLines = "/emergency-lines";
+  static const String officialsContact = "/official-contacts";
   static const String emergencyTips = "/emergency-tips";
 
   static List<GetPage> routes = [
     GetPage(name: initial, page: () => const OnBoarding()),
-    GetPage(name: login, page: () => const Login()),
-    GetPage(name: signup, page: () => const SignUp()),
+    GetPage(name: signIn, page: () => const SignIn()),
+    GetPage(name: signUp, page: () => const SignUp()),
     GetPage(name: allowLocation, page: () => const AllowLocation()),
     GetPage(name: personalInformation, page: () => const PersonalInformation()),
     GetPage(name: medicalInformation, page: () => const MedicalInformation()),
@@ -36,6 +38,9 @@ class AppRoutes {
     GetPage(
         name: proximalEmergencyPlaces,
         page: () => const ProximalEmergencyPlaces()),
+    GetPage(
+        name: emergencyLines,
+        page: () => const EmergencyLines()),
     GetPage(name: officialsContact, page: () => OfficialsContact()),
     GetPage(name: emergencyTips, page: () => const EmergencyTips()),
   ];

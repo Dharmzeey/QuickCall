@@ -79,7 +79,7 @@ class EmergencyInfoWidget extends StatelessWidget {
           },
           style: FilledButton.styleFrom(
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5.0)),
+                  borderRadius: BorderRadius.circular(10.0)),
               backgroundColor: AppColors.mainColor,
               padding: EdgeInsets.all(AppDimensions.paddingSmall),
               minimumSize: Size(AppDimensions.screenWidth / 1.5,

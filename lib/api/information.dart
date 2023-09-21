@@ -66,8 +66,8 @@ class UserInfo {
       body: jsonEncode({
         'bloodType': bloodGroup.text,
         'genotype': genotype.text,
-        'allergies': allergies.text,
-        'chronicConditions': otherConditions.text,
+        'allergies': allergies.text.split(','),
+        'chronicConditions': otherConditions.text.split(','),
         'famDocContact': familyDoctorContact.text,
       }),
     );

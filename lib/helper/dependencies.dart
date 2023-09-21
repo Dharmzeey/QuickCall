@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:quickcall/api/allow_location_api.dart';
+import 'package:quickcall/controller/emergency_info_controller.dart';
 import 'package:quickcall/controller/location_controller.dart';
 
 Future<void> init() async {
@@ -11,4 +12,10 @@ Future<void> init() async {
 
   // Controller
   Get.put(LocationController());
+
+Get.put<EmergencyController>(EmergencyController(emergencyType: 'Medical'), tag: 'Medical');
+Get.put<EmergencyController>(EmergencyController(emergencyType: 'Fire'), tag: 'Fire');
+Get.put<EmergencyController>(EmergencyController(emergencyType: 'Police'), tag: 'Police');
+
+
 }

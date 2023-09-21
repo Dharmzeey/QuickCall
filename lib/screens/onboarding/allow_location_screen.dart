@@ -77,7 +77,7 @@ class _AllowLocationState extends State<AllowLocation> {
                   if (!locationController.hasPermission) {
                     null;
                   } else if (locationController.hasPermission) {
-                    Get.offAndToNamed(AppRoutes.signup);
+                    Get.offAndToNamed(AppRoutes.signUp);
                   } else if (_isEnabled) {
                     await _triggerLocation();
                   }

@@ -116,14 +116,14 @@ class _MedicalInformationState extends State<MedicalInformation> {
                     height: AppDimensions.spacing20,
                   ),
                   InfoTextInputWidget(
-                    label: "Allergies",
+                    label: "Allergies. Use ',' to seperate allergies",
                     inputController: _allergies,
                   ),
                   SizedBox(
                     height: AppDimensions.spacing20,
                   ),
                   InfoTextInputWidget(
-                    label: "Disease or Other conditions",
+                    label: "Disease or Other conditions. Use ',' to seperate",
                     inputController: _otherConditions,
                   ),
                   SizedBox(

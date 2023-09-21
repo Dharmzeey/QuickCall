@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:quickcall/controller/emergency_info_controller.dart';
 import 'package:quickcall/controller/location_controller.dart';
 import 'package:quickcall/utils/colors.dart';
 import 'package:quickcall/utils/dimension.dart';
@@ -78,19 +79,25 @@ class WelcomeScreen extends StatelessWidget {
               imageUrl: "images/police.png",
               text: "POLICE",
               bgColor: const Color.fromRGBO(55, 55, 55, 1),
-              args: const {
+              args: {
                 'emergencyType': 'Police Emergency',
                 'helpNearYou': 'Police Stations near you',
-                'helpNearYouIcon': FaIcon(
+                'helpNearYouIcon': const FaIcon(
                   FontAwesomeIcons.building,
                   color: AppColors.iconMainColor,
                 ),
+                'emergencyLines': 'Police Emergency lines in your location',
+                'emergencyLinesIcon': const Icon(
+                  Icons.phonelink_ring_sharp,
+                  color: AppColors.iconMainColor,
+                ),
                 'emergencyTip': 'Things you can do during police emergency',
-                'emergencyTipIcon': Icon(
+                'emergencyTipIcon': const Icon(
                   Icons.dangerous,
                   color: AppColors.iconMainColor,
                 ),
-                'emergencyIcon': 'images/police_device.png'
+                'emergencyIcon': 'images/police_device.png',
+                'controller': Get.find<EmergencyController>(tag: 'Police'),
               },
             ),
             SizedBox(
@@ -100,19 +107,25 @@ class WelcomeScreen extends StatelessWidget {
                 imageUrl: "images/medics.png",
                 text: "MEDICAL",
                 bgColor: const Color.fromRGBO(0, 56, 254, 1),
-                args: const {
+                args: {
                   'emergencyType': 'Medical Emergency',
-                  'helpNearYou': 'Hospitals near you',
-                  'helpNearYouIcon': FaIcon(
+                  'helpNearYou': 'Hospitals / Medical centers near you',
+                  'helpNearYouIcon': const FaIcon(
                     FontAwesomeIcons.truckMedical,
                     color: AppColors.iconMainColor,
                   ),
+                  'emergencyLines': 'Medical Emergency lines in your location',
+                  'emergencyLinesIcon': const Icon(
+                    Icons.phonelink_ring_sharp,
+                    color: AppColors.iconMainColor,
+                  ),
                   'emergencyTip': 'First aid tips for emergency situations',
-                  'emergencyTipIcon': FaIcon(
+                  'emergencyTipIcon': const FaIcon(
                     FontAwesomeIcons.kitMedical,
                     color: AppColors.iconMainColor,
                   ),
-                  'emergencyIcon': 'images/medical_insurance.png'
+                  'emergencyIcon': 'images/medical_insurance.png',
+                  'controller': Get.find<EmergencyController>(tag: 'Medical'),
                 }),
             SizedBox(
               height: AppDimensions.spacing30,
@@ -121,19 +134,25 @@ class WelcomeScreen extends StatelessWidget {
               imageUrl: "images/fire.png",
               text: "FIRE",
               bgColor: const Color.fromRGBO(254, 0, 0, 1),
-              args: const {
+              args: {
                 'emergencyType': 'Fire Emergency',
                 'helpNearYou': 'Fire Stations near you',
-                'helpNearYouIcon': FaIcon(
+                'helpNearYouIcon': const FaIcon(
                   FontAwesomeIcons.truckFieldUn,
                   color: AppColors.iconMainColor,
                 ),
+                'emergencyLines': 'Fire Emergency lines in your location',
+                'emergencyLinesIcon': const Icon(
+                  Icons.phonelink_ring_sharp,
+                  color: AppColors.iconMainColor,
+                ),
                 'emergencyTip': 'Tips to prevent and handle fire outbreak',
-                'emergencyTipIcon': FaIcon(
+                'emergencyTipIcon': const FaIcon(
                   FontAwesomeIcons.fire,
                   color: AppColors.iconMainColor,
                 ),
-                'emergencyIcon': 'images/fire_extinguish.png'
+                'emergencyIcon': 'images/fire_extinguish.png',
+                'controller': Get.find<EmergencyController>(tag: 'Fire'),
               },
             )
           ],

@@ -4,6 +4,7 @@ import 'package:quickcall/api/authentication.dart';
 import 'package:quickcall/routes/routes.dart';
 import 'package:quickcall/utils/colors.dart';
 import 'package:quickcall/utils/dimension.dart';
+import 'package:quickcall/utils/styles.dart';
 import 'package:quickcall/widgets/auth_type_divide_widget.dart';
 import 'package:quickcall/widgets/google_auth_widget.dart';
 import 'package:quickcall/widgets/button_widgets.dart';
@@ -110,6 +111,27 @@ class _SignUpState extends State<SignUp> {
                 const AuthTypeDivider(),
                 SizedBox(height: AppDimensions.spacing50),
                 const GoogleAuthWidget(label: "Continue with Google"),
+                SizedBox(height: AppDimensions.spacing20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "Already have an account ?",
+                      style: CustomTextStyles.primaryTextStyle,
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Get.toNamed(AppRoutes.signIn);
+                      },
+                      child: Text(
+                        'Login',
+                        style: CustomTextStyles.primaryTextStyle.copyWith(
+                            decoration: TextDecoration.underline,
+                            decorationColor: AppColors.mainColor),
+                      ),
+                    ),
+                  ],
+                ),
                 SizedBox(
                   height: AppDimensions.spacing350,
                 ),
@@ -125,7 +147,7 @@ class _SignUpState extends State<SignUp> {
                 ActionButton(
                   text: "Next",
                   isEnabled: isEnabled,
-                  isProcessing: false,
+                  isProcessing: isProcessing,
                   onPressedFunction: createUser,
                 ),
               ],
@@ -144,7 +166,7 @@ class _SignUpState extends State<SignUp> {
     final bool signUpResponse =
         await Authentication().signUp(_username, _password);
     if (signUpResponse) {
-      Get.offAndToNamed(AppRoutes.personalInformation);
+      Get.offAndToNamed(AppRoutes.welcome);
     } else {}
     setState(() {
       isProcessing = false;

@@ -34,6 +34,7 @@ class AppDimensions {
   static double height100 = screenHeight / 13.5;
 
   static double width350 = screenWidth / 1.42;
+  static double width325 = screenWidth / 1.54;
   static double width250 = screenWidth / 2;
   static double width225 = screenWidth / 2.2;
 

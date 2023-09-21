@@ -66,12 +66,16 @@ class _PersonalInformationState extends State<PersonalInformation> {
         _email.text.length > 12 &&
         _phoneNumber.text.length > 10 &&
         _age.text.length > 1 &&
-        isGenderSelected) {
+        isGenderSelected == true) {
+      print(isGenderSelected);
+      print("All ready");
       setState(() {
         isEnabled = true;
       });
     } else {
       setState(() {
+        print(isGenderSelected);
+        print("nit ready");
         isEnabled = false;
       });
     }
@@ -113,7 +117,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                       Expanded(
                           child: InfoTextInputWidget(
                         inputController: _lastName,
-                        label: "Surname",
+                        label: "Last Name",
                       ))
                     ],
                   ),
@@ -148,6 +152,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                               _selectedGender = value;
                               isGenderSelected = true;
                             });
+                            _checkFieldValue();
                           },
                           items: _genders.map((gender) {
                             return DropdownMenuItem<String>(
@@ -203,7 +208,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                   ActionButton(
                     text: "Continue",
                     isEnabled: isEnabled,
-                    isProcessing: false,
+                    isProcessing: isProcessing,
                     onPressedFunction: createBasicInfo,
                   )
                 ],
@@ -230,6 +235,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
   }
 
   Future<void> createBasicInfo() async {
+    print("i am before signup");
     setState(() {
       isProcessing = true;
       isEnabled = false;

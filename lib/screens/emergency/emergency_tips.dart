@@ -11,7 +11,7 @@ class EmergencyTips extends StatelessWidget {
   Widget build(BuildContext context) {
     final dynamic arguments = Get.arguments;
     final String title = arguments['title'];
-    final tips = List<String>.from(arguments['tips']);
+    final tips = List<dynamic>.from(arguments['tips']);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -29,7 +29,7 @@ class EmergencyTips extends StatelessWidget {
           itemBuilder: (context, index) {
             return ListTile(
               title: Text(
-                tips[index],
+                tips[index].description,
                 style: CustomTextStyles.primaryTextStyle,
               ),
             );

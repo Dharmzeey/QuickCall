@@ -50,13 +50,18 @@ class OfficialsContact extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(officials[index][0]),
-                          SizedBox(height: AppDimensions.spacing10),
+                          Text(
+                            officials[index].position,
+                            style: TextStyle(fontSize: AppDimensions.font18),
+                          ),
+                          SizedBox(height: AppDimensions.spacing5),
+                          Text(officials[index].personName),
+                          SizedBox(height: AppDimensions.spacing5),
                           Row(
                             children: [
-                              Text(officials[index][1]),
+                              Text(officials[index].phoneNo),
                               const Text(" , "),
-                              Text(officials[index][2])
+                              Text(officials[index].whatsappContact)
                             ],
                           )
                         ],
@@ -67,7 +72,7 @@ class OfficialsContact extends StatelessWidget {
                     children: [
                       IconButton(
                           onPressed: () {
-                            openWhatsAppChat(officials[index][3]);
+                            openWhatsAppChat(officials[index].whatsappContact);
                           },
                           icon: const FaIcon(FontAwesomeIcons.whatsapp)),
                       IconButton(
@@ -75,7 +80,7 @@ class OfficialsContact extends StatelessWidget {
                           icon: const FaIcon(FontAwesomeIcons.comment)),
                       IconButton(
                           onPressed: () {
-                            openPhoneDialer(officials[index][4]);
+                            openPhoneDialer(officials[index].phoneNo);
                           },
                           icon: const Icon(Icons.call_outlined))
                     ],
