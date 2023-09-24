@@ -32,6 +32,7 @@ class _MedicalInformationState extends State<MedicalInformation> {
       _bloodGroup.text = widget.initialData!.bloodType;
       _genotype.text = widget.initialData!.genotype;
       _familyDoctorContact.text = widget.initialData?.famDocContact ?? '';
+      isEnabled = true;
     }
 
     _bloodGroup.addListener(() {
@@ -58,6 +59,14 @@ class _MedicalInformationState extends State<MedicalInformation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: widget.initialData != null ? true : false,
+        backgroundColor: AppColors.bgColor,
+        iconTheme: IconThemeData(
+          color: AppColors.mainColor,
+          size: AppDimensions.font32,
+        ),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(AppDimensions.paddingMain),
@@ -66,9 +75,6 @@ class _MedicalInformationState extends State<MedicalInformation> {
               key: _formkey,
               child: Column(
                 children: [
-                  SizedBox(
-                    height: AppDimensions.spacing200,
-                  ),
                   Text(
                     "Medical Information",
                     style: TextStyle(

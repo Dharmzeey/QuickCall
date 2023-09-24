@@ -12,8 +12,6 @@ class EmergenciesApi {
       final Map<String, dynamic> jsonData = json.decode(response.body);
       return jsonData;
     } else {
-      print('Error fetching In: ${response.statusCode}');
-      print('Response body for fetching ${response.body}');
 
       throw Exception('Failed to load data');
     }

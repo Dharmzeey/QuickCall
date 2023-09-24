@@ -3,17 +3,23 @@ import 'package:quickcall/utils/colors.dart';
 import 'package:quickcall/utils/dimension.dart';
 
 class InfoTextInputWidget extends StatelessWidget {
-  const InfoTextInputWidget(
-      {super.key, required this.label, required this.inputController, this.isReadOnly});
+  const InfoTextInputWidget({
+    super.key,
+    required this.label,
+    required this.inputController,
+    this.isReadOnly, this.isTextObscured,
+  });
   final String label;
   final TextEditingController inputController;
   final bool? isReadOnly;
+  final bool? isTextObscured;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       style: const TextStyle(color: AppColors.mainColor),
       controller: inputController,
+      obscureText: isTextObscured ?? false,
       decoration: InputDecoration(
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: AppColors.mainColor, width: 1.0),

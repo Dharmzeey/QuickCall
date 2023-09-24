@@ -51,6 +51,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
       _emergencyContactphoneNumber.text =
           widget.initialData?.emergencyPhoneNo ?? '';
       isGenderSelected = true;
+      isEnabled = true;
     }
     _firstName.addListener(() {
       _checkFieldValue();
@@ -89,6 +90,14 @@ class _PersonalInformationState extends State<PersonalInformation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: widget.initialData != null ? true : false,
+        backgroundColor: AppColors.bgColor,
+        iconTheme: IconThemeData(
+          color: AppColors.mainColor,
+          size: AppDimensions.font32,
+        ),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(AppDimensions.paddingMain),
@@ -97,9 +106,6 @@ class _PersonalInformationState extends State<PersonalInformation> {
               key: _formKey,
               child: Column(
                 children: [
-                  SizedBox(
-                    height: AppDimensions.spacing150,
-                  ),
                   Text(
                     "Personal Information",
                     style: TextStyle(

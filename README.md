@@ -12,6 +12,11 @@
 + url_launcher to launch URL like maps
 + font_awesome_flutter for icons not on flutter (whatsapp) {There is a mix in the use of flutter IconData and FaIcon}
 
+ The backend written in node is here [Here](https://github.com/Alausa2001/QuickCall/)
+
+ The homepage
+ 
+
 
 ## Getting Started
 

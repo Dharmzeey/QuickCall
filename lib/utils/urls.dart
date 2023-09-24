@@ -13,4 +13,7 @@ class AppUrls {
   static const String updateMedicalInfo = "/profile/medical_information/update";
 
   static const String emergencyInformation = "/emergency";
+  static const String sendFeedback = "/emergency/feedback";
+  static const String fetchFeedbacks = "/emergency/my_feedbacks";
+
 }

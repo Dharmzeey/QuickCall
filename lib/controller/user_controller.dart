@@ -7,15 +7,20 @@ class UserProfileController extends GetxController {
     fetchPersonalInformation();
     fetchmedicalInformation();
   }
+  final displayDetailsController = Get.put(DisplayDetailsController());
   User? _personalInformation;
   User? get personalInformation => _personalInformation;
   Future<dynamic> fetchPersonalInformation() async {
     try {
       final jsonData = await UserInfo().fetchBasicInfo();
       _personalInformation = User.fromJson(jsonData['userInformation']);
+      displayDetailsController.displayName.value =
+          _personalInformation!.firstName;
+      displayDetailsController.displayGender.value =
+          _personalInformation!.gender;
+      displayDetailsController.isLoggedIn.value = true;
       return _personalInformation;
     } catch (e) {
-      print('An error occured $e');
       return null;
     }
   }
@@ -29,12 +34,13 @@ class UserProfileController extends GetxController {
           MedicalInformaton.fromJson(jsonData['medicalInformaton']);
       return _medicalInformation;
     } catch (e) {
-      print('An error occured $e');
       return null;
     }
   }
 }
 
-class DisplayNameController extends GetxController {
+class DisplayDetailsController extends GetxController {
   RxString displayName = "".obs;
+  RxString displayGender = "".obs;
+  RxBool isLoggedIn = false.obs;
 }

@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:quickcall/screens/emergency/general_emergency_tips.dart';
-import 'package:quickcall/screens/feedback.dart';
+import 'package:quickcall/screens/feedback/fetch_feedback_screen.dart';
+import 'package:quickcall/screens/feedback/send_feedback_screen.dart';
 import 'package:quickcall/screens/onboarding/allow_location_screen.dart';
 import 'package:quickcall/screens/emergency/emergency_info_screen.dart';
 import 'package:quickcall/screens/emergency/emergency_lines.dart';
@@ -28,7 +29,8 @@ class AppRoutes {
   static const String officialsContact = "/official-contacts";
   static const String specificEmergencyTips = "/emergency-tips";
   static const String generalEmergencyTips = "/emergency-emergency-tips";
-  static const String feedback = "/feedback";
+  static const String sendFeedback = "/send-feedback";
+  static const String fetchFeedbacks = "/fetch-feedback";
 
   static List<GetPage> routes = [
     GetPage(name: initial, page: () => const OnBoarding()),
@@ -46,6 +48,7 @@ class AppRoutes {
     GetPage(name: officialsContact, page: () => OfficialsContact()),
     GetPage(name: specificEmergencyTips, page: () => const EmergencyTips()),
     GetPage(name: generalEmergencyTips, page: () => const GeneralTips()),
-    GetPage(name: feedback, page: () => const FeedBack()),
+    GetPage(name: sendFeedback, page: () => const FeedBack()),
+    GetPage(name: fetchFeedbacks, page: () => const FetchFeedBacks()),
   ];
 }

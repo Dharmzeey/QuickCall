@@ -82,9 +82,10 @@ class _SignUpState extends State<SignUp> {
                   height: AppDimensions.height120,
                   width: AppDimensions.height120,
                   decoration: const BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage("images/loggingin.png"),
-                          fit: BoxFit.contain)),
+                    image: DecorationImage(
+                        image: AssetImage("images/signingup.png"),
+                        fit: BoxFit.contain),
+                  ),
                 ),
                 SizedBox(
                   height: AppDimensions.spacing20,
@@ -106,6 +107,7 @@ class _SignUpState extends State<SignUp> {
                 InfoTextInputWidget(
                   label: "Password",
                   inputController: _password,
+                  isTextObscured: true,
                 ),
                 SizedBox(height: AppDimensions.spacing50),
                 const AuthTypeDivider(),
@@ -121,10 +123,10 @@ class _SignUpState extends State<SignUp> {
                     ),
                     TextButton(
                       onPressed: () {
-                        Get.toNamed(AppRoutes.signIn);
+                        Get.offAndToNamed(AppRoutes.signIn);
                       },
                       child: Text(
-                        'Login',
+                        'Sign In',
                         style: CustomTextStyles.primaryTextStyle.copyWith(
                             decoration: TextDecoration.underline,
                             decorationColor: AppColors.mainColor),

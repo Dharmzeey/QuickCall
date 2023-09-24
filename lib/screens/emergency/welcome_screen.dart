@@ -16,8 +16,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class WelcomeScreen extends StatelessWidget {
   WelcomeScreen({super.key});
   final LocationController locationController = Get.put(LocationController());
-  final DisplayNameController displayNameController =
-      Get.put(DisplayNameController());
+  final DisplayDetailsController displayDetailsController =
+      Get.put(DisplayDetailsController());
 
   @override
   Widget build(BuildContext context) {
@@ -68,16 +68,22 @@ class WelcomeScreen extends StatelessWidget {
             SizedBox(
               height: AppDimensions.spacing100,
             ),
-            const CircleAvatar(
-              radius: 100,
-              child: Image(image: AssetImage("images/avatar_male.png")),
+            Obx(
+              () => CircleAvatar(
+                radius: 100,
+                child: displayDetailsController.displayGender.value == "Female"
+                    ? const Image(image: AssetImage("images/avatar_female.png"))
+                    : const Image(
+                        image: AssetImage("images/avatar_male.png"),
+                      ),
+              ),
             ),
             SizedBox(
               height: AppDimensions.spacing20,
             ),
             Obx(
               () => Text(
-                displayNameController.displayName.value,
+                displayDetailsController.displayName.value,
                 style: TextStyle(
                     color: AppColors.mainColor, fontSize: AppDimensions.font24),
               ),
@@ -177,16 +183,20 @@ class WelcomeScreen extends StatelessWidget {
               height: AppDimensions.spacing200,
             ),
             TextButton(
-                onPressed: () {
-                  Get.toNamed(AppRoutes.generalEmergencyTips);
-                },
-                child: Text(
-                  'General Tips for emergency situations',
-                  style: TextStyle(
-                    color: Colors.blue.shade900,
-                    fontSize: AppDimensions.font20,
-                  ),
-                ))
+              onPressed: () {
+                Get.toNamed(AppRoutes.generalEmergencyTips);
+              },
+              child: Text(
+                'General Tips for emergency situations',
+                style: TextStyle(
+                  color: Colors.blue.shade900,
+                  fontSize: AppDimensions.font20,
+                  decoration: TextDecoration.underline,
+                  decorationThickness: 2,
+                  decorationColor: Colors.blue.shade900,
+                ),
+              ),
+            )
           ],
         ),
       ),
@@ -198,8 +208,8 @@ class MyDrawer extends StatelessWidget {
   MyDrawer({super.key});
   final UserProfileController userProfileController =
       Get.put(UserProfileController());
-  final DisplayNameController displayNameController =
-      Get.put(DisplayNameController());
+  final DisplayDetailsController displayDetailsController =
+      Get.put(DisplayDetailsController());
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -207,69 +217,84 @@ class MyDrawer extends StatelessWidget {
       child: ListView(
         children: <Widget>[
           DrawerHeader(
-            child: Row(
+              child: Obx(
+            () => Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                const CircleAvatar(
+                CircleAvatar(
                   radius: 30,
-                  child: Image(image: AssetImage("images/avatar_male.png")),
+                  child:
+                      displayDetailsController.displayGender.value == "Female"
+                          ? const Image(
+                              image: AssetImage("images/avatar_female.png"))
+                          : const Image(
+                              image: AssetImage("images/avatar_male.png"),
+                            ),
                 ),
                 SizedBox(
                   width: AppDimensions.spacing10,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10),
-                  child: Obx(() => Text(
-                        displayNameController.displayName.value,
-                        style: TextStyle(
-                            color: AppColors.bgColor,
-                            fontSize: AppDimensions.font24),
-                      )),
+                  child: Obx(
+                    () => Text(
+                      displayDetailsController.displayName.value,
+                      style: TextStyle(
+                          color: AppColors.bgColor,
+                          fontSize: AppDimensions.font24),
+                    ),
+                  ),
                 ),
               ],
             ),
-          ),
+          )),
           SizedBox(
             height: AppDimensions.spacing50,
           ),
-          Column(
-            children: userProfileController.personalInformation != null
-                ? [
-                    MyListTile(
-                      text: 'Personal Information',
-                      icon: Icons.person,
-                      onTapFunction: toPersonalInformation,
-                    ),
-                    const Divider(),
-                    MyListTile(
-                      text: 'Medical Information',
-                      icon: Icons.file_open_sharp,
-                      onTapFunction: toMedicalInformation,
-                    ),
-                    const Divider(),
-                    MyListTile(
-                      text: 'Log Out',
-                      icon: Icons.logout,
-                      onTapFunction: toSignOut,
-                    ),
-                    const Divider(),
-                  ]
-                : [
-                    MyListTile(
-                      text: 'Sign In',
-                      icon: Icons.login,
-                      onTapFunction: toSignIn,
-                    ),
-                    const Divider(),
-                  ],
-          )
+          Obx(() => Column(
+                children: displayDetailsController.isLoggedIn.value == true
+                    ? [
+                        MyListTile(
+                          text: 'Personal Information',
+                          icon: Icons.person,
+                          onTapFunction: toPersonalInformation,
+                        ),
+                        const Divider(),
+                        MyListTile(
+                          text: 'Medical Information',
+                          icon: Icons.file_open_sharp,
+                          onTapFunction: toMedicalInformation,
+                        ),
+                        const Divider(),
+                        MyListTile(
+                          text: 'Feedbacks',
+                          icon: Icons.feed,
+                          onTapFunction: toFeedback,
+                        ),
+                        const Divider(),
+                        MyListTile(
+                          text: 'Log Out',
+                          icon: Icons.logout,
+                          onTapFunction: toSignOut,
+                        ),
+                        const Divider(),
+                      ]
+                    : [
+                        MyListTile(
+                          text: 'Sign In',
+                          icon: Icons.login,
+                          onTapFunction: toSignIn,
+                        ),
+                        const Divider(),
+                      ],
+              ))
         ],
       ),
     );
   }
 
   void toSignIn() {
-    Get.toNamed(AppRoutes.signIn);
+    Get.offAndToNamed(AppRoutes.signIn);
   }
 
   Future<void> toPersonalInformation() async {
@@ -299,15 +324,20 @@ class MyDrawer extends StatelessWidget {
     }
   }
 
+  void toFeedback() async {
+    Get.toNamed(AppRoutes.fetchFeedbacks);
+  }
+
   void toSignOut() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     // prefs.remove("isActivated");
     prefs.remove('token');
+    displayDetailsController.isLoggedIn.value = false;
     Get.snackbar(
       "Success",
       "Successfully signed out",
       colorText: AppColors.mainColor,
     );
-    Get.offAndToNamed(AppRoutes.signIn);
+    Get.offAllNamed(AppRoutes.signIn);
   }
 }

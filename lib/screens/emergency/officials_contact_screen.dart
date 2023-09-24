@@ -76,8 +76,12 @@ class OfficialsContact extends StatelessWidget {
                           },
                           icon: const FaIcon(FontAwesomeIcons.whatsapp)),
                       IconButton(
-                          onPressed: () {},
-                          icon: const FaIcon(FontAwesomeIcons.comment)),
+                          onPressed: () {
+                            const bodyMessage = 'Quick Call ...';
+                            openSMS(
+                                officials[index].whatsappContact, bodyMessage);
+                          },
+                          icon: const FaIcon(FontAwesomeIcons.message)),
                       IconButton(
                           onPressed: () {
                             openPhoneDialer(officials[index].phoneNo);

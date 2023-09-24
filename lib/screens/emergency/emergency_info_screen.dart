@@ -56,6 +56,7 @@ class EmergencyInformation extends StatelessWidget {
                   text: emergencyLines,
                   routeTo: AppRoutes.emergencyLines,
                   args: {
+                    'emergencyName': emergencyLines.split(' ')[0],
                     'emergencyLines': controller.emergencyContacts,
                     'title': "Emergency Contacts"
                   },

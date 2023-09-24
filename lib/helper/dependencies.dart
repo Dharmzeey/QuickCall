@@ -8,7 +8,9 @@ Future<void> init() async {
   // Get.lazyPut(() => EnableLocation().setLocation);
   try {
     await EnableLocation().setLocation;
-  } catch (e) {}
+  } catch (e) {
+    throw 'error $e';
+  }
 
   // Controller
   Get.put(LocationController());

@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:quickcall/routes/routes.dart';
 import 'package:quickcall/utils/colors.dart';
 import 'package:quickcall/utils/dimension.dart';
 import 'package:quickcall/utils/launchers.dart';
@@ -14,6 +17,7 @@ class EmergencyLines extends StatelessWidget {
     final dynamic arguments = Get.arguments;
     final String title = arguments['title'];
     final emergencyLines = List<dynamic>.from(arguments['emergencyLines']);
+    final emergencyName = arguments['emergencyName'];
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -61,6 +65,8 @@ class EmergencyLines extends StatelessWidget {
                               onPressed: () {
                                 openWhatsAppChat(
                                     emergencyLines[index].whatsappContact);
+                                showCustomDialogue(emergencyName,
+                                    emergencyLines[index].whatsappContact);
                               },
                               icon: const FaIcon(
                                 FontAwesomeIcons.whatsapp,
@@ -69,7 +75,23 @@ class EmergencyLines extends StatelessWidget {
                             ),
                             IconButton(
                               onPressed: () {
+                                final bodyMessage =
+                                    'Quick Call, A $emergencyName Emergency...';
+                                openSMS(emergencyLines[index].whatsappContact,
+                                    bodyMessage);
+                                showCustomDialogue(emergencyName,
+                                    emergencyLines[index].whatsappContact);
+                              },
+                              icon: const Icon(
+                                Icons.message,
+                                color: AppColors.mainColor,
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {
                                 openPhoneDialer(
+                                    emergencyLines[index].emergencyNo);
+                                showCustomDialogue(emergencyName,
                                     emergencyLines[index].emergencyNo);
                               },
                               icon: const Icon(
@@ -95,6 +117,48 @@ class EmergencyLines extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  void showCustomDialogue(emergencyName, emergencyContact) {
+    Timer(
+      const Duration(seconds: 2),
+      () {
+        Get.dialog(
+          AlertDialog(
+            title: const Text("Get Feedback"),
+            content: const Text(
+              "Did you interract with the contact? \nWould you like give a review?",
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Get.back(result: true);
+                },
+                child: const Text("Yes"),
+              ),
+              TextButton(
+                onPressed: () {
+                  Get.back(result: false);
+                },
+                child: const Text("No"),
+              ),
+            ],
+          ),
+        ).then(
+          (value) {
+            if (value == true) {
+              Get.toNamed(
+                AppRoutes.sendFeedback,
+                arguments: {
+                  'emergencyName': emergencyName,
+                  'emergencyContact': emergencyContact,
+                },
+              );
+            } else if (value == false) {}
+          },
+        );
+      },
     );
   }
 }

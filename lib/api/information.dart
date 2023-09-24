@@ -21,13 +21,13 @@ class UserInfo {
   ) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     final token = pref.getString('token') ?? '';
-    var url = Uri.parse(AppUrls.baseUrl + AppUrls.createBasicInfo);
-    var requestType;
+    Uri url;
+    dynamic requestType;
     if (isUpdating) {
       url = Uri.parse(AppUrls.baseUrl + AppUrls.updateBasicInfo);
       requestType = http.patch;
     } else {
-      url = Uri.parse(AppUrls.baseUrl + AppUrls.updateBasicInfo);
+      url = Uri.parse(AppUrls.baseUrl + AppUrls.createBasicInfo);
       requestType = http.post;
     }
 
@@ -48,21 +48,14 @@ class UserInfo {
     );
 
     if (response.statusCode == 201) {
-      final responseData = jsonDecode(response.body);
-      print('Data submitted successfully: $responseData');
       Get.snackbar('Success', 'Personal Information saved',
           colorText: AppColors.mainColor);
       return true;
     } else if (response.statusCode == 200) {
-      final responseData = jsonDecode(response.body);
-      print('Data submitted successfully: $responseData');
       Get.snackbar('Success', 'Personal Information Updated',
           colorText: AppColors.mainColor);
       return true;
     } else {
-      print(token);
-      print('Error submitting data: ${response.statusCode}');
-      print('Response body: ${response.body}');
       Get.snackbar('Error', 'An Error Occured', colorText: AppColors.mainColor);
       return false;
     }
@@ -78,8 +71,8 @@ class UserInfo {
   ) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     final token = pref.getString('token') ?? '';
-    var url = Uri.parse(AppUrls.baseUrl + AppUrls.createMedicalInfo);
-    var requestType;
+    Uri url;
+    dynamic requestType;
     if (isUpdating) {
       url = Uri.parse(AppUrls.baseUrl + AppUrls.updateMedicalInfo);
       requestType = http.patch;
@@ -99,20 +92,14 @@ class UserInfo {
       }),
     );
     if (response.statusCode == 201) {
-      final responseData = jsonDecode(response.body);
-      print('Data submitted successfully: $responseData');
       Get.snackbar('Success', 'Medical Information saved',
           colorText: AppColors.mainColor);
       return true;
     } else if (response.statusCode == 200) {
-      final responseData = jsonDecode(response.body);
-      print('Medical Info updtaed successfully: $responseData');
       Get.snackbar('Success', 'Medical Information Updated',
           colorText: AppColors.mainColor);
       return true;
     } else {
-      print('Error submitting data: ${response.statusCode}');
-      print('Response body: ${response.body}');
       Get.snackbar('Error', 'An Error Occured', colorText: AppColors.mainColor);
       return false;
     }
@@ -128,9 +115,6 @@ class UserInfo {
       final Map<String, dynamic> jsonData = json.decode(response.body);
       return jsonData;
     } else {
-      print('Error fetching In: ${response.statusCode}');
-      print('Response body for fetching ${response.body}');
-
       throw Exception('Failed to load data');
     }
   }
@@ -145,9 +129,6 @@ class UserInfo {
       final Map<String, dynamic> jsonData = json.decode(response.body);
       return jsonData;
     } else {
-      print('Error fetching In: ${response.statusCode}');
-      print('Response body for fetching ${response.body}');
-
       throw Exception('Failed to load data');
     }
   }

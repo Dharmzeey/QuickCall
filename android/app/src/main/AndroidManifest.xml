@@ -32,6 +32,8 @@
     </application>
     <!-- FOR LOCATION -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- INTERNET -->
+    <uses-permission android:name="android.permission.INTERNET" />
     <!-- Provide required visibility configuration for API level 30 and above -->
     <queries>
         <!-- call support -->

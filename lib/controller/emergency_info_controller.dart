@@ -31,7 +31,6 @@ class EmergencyController extends GetxController {
     try {
       final jsonData = await emergenciesApi.fetchData();
       locationController.localGovernment.value = jsonData['localGovt'];
-      // print(currentLocalGovernment);
 
       final List<NearbyPlace> fetchPlaces = jsonData['nearby_places']
           ?.map((json) => NearbyPlace.fromJson(json))
@@ -58,7 +57,7 @@ class EmergencyController extends GetxController {
           .cast<EmergencyTip>();
       emergencyTips.assignAll(fetchTips);
     } catch (e) {
-      print('Error in process of fetching data: $e');
+      throw 'Error in process of fetching data: $e';
     }
   }
 }

@@ -23,6 +23,16 @@ void openPhoneDialer(String phoneNumber) async {
   }
 }
 
+void openSMS(String phoneNumber, String bodyMessage) async {
+  final String smsUrl = 'sms:$phoneNumber?body=$bodyMessage';
+  final Uri url = Uri.parse(smsUrl);
+  if (await canLaunchUrl(url)) {
+    await launchUrl(url);
+  } else {
+    throw 'Could not open SMS';
+  }
+}
+
 void openWhatsAppChat(String phoneNumber) async {
   final String whatsappUrl = 'https://wa.me/$phoneNumber';
   final Uri url = Uri.parse(whatsappUrl);

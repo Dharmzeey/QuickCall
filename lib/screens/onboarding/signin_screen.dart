@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart';
 import 'package:quickcall/api/authentication.dart';
 import 'package:quickcall/controller/user_controller.dart';
 import 'package:quickcall/routes/routes.dart';
@@ -26,7 +25,7 @@ class _SignInState extends State<SignIn> {
   late final TextEditingController _password;
   bool isEnabled = false;
   bool isProcessing = false;
-  final displayNameController = Get.put(DisplayNameController());
+  final displayNameController = Get.put(DisplayDetailsController());
 
   void checkFieldValue(String username, String password) {
     if (username.length > 3 && password.length > 5) {
@@ -78,15 +77,16 @@ class _SignInState extends State<SignIn> {
                   height: AppDimensions.height120,
                   width: AppDimensions.height120,
                   decoration: const BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage("images/loggingin.png"),
-                          fit: BoxFit.contain)),
+                    image: DecorationImage(
+                        image: AssetImage("images/signin.png"),
+                        fit: BoxFit.contain),
+                  ),
                 ),
                 SizedBox(
                   height: AppDimensions.spacing20,
                 ),
                 Text(
-                  "LOG IN",
+                  "SIGN IN",
                   style: TextStyle(
                       fontSize: AppDimensions.font24,
                       color: AppColors.mainColor),
@@ -102,6 +102,7 @@ class _SignInState extends State<SignIn> {
                 InfoTextInputWidget(
                   label: "Password",
                   inputController: _password,
+                  isTextObscured: true,
                 ),
                 SizedBox(height: AppDimensions.spacing50),
                 const AuthTypeDivider(),
@@ -150,23 +151,22 @@ class _SignInState extends State<SignIn> {
     final dynamic signInResponse =
         await Authentication().signIn(_username, _password);
     if (signInResponse != null) {
-      print('Sign In response: $signInResponse');
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setBool("isActivated", true);
-      print('Sign In response: $signInResponse');
 
       if (signInResponse['status'] == 'success') {
+        displayNameController.isLoggedIn.value = true;
         if (signInResponse['profileFilled'] &&
             signInResponse['medInfo'] != null) {
-          displayNameController.displayName =
+          displayNameController.displayName.value =
               signInResponse['user']['firstName'];
           Get.offAndToNamed(AppRoutes.welcome);
         } else if (signInResponse['profileFilled']) {
-          displayNameController.displayName =
+          displayNameController.displayName.value =
               signInResponse['user']['firstName'];
-          Get.toNamed(AppRoutes.medicalInformation);
+          Get.offAndToNamed(AppRoutes.medicalInformation);
         } else {
-          displayNameController.displayName = "User".obs;
+          displayNameController.displayName.value = "User";
           Get.offAndToNamed(AppRoutes.personalInformation);
         }
       } else {}

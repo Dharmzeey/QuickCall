@@ -33,7 +33,7 @@ class GeneralTips extends StatelessWidget {
                     title: Text(
                       tips[index],
                       style: CustomTextStyles.primaryTextStyle
-                          .copyWith(height: 1.7),
+                          .copyWith(height: 1.75),
                     ),
                   );
                 },
