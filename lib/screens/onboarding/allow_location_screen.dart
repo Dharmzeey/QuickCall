@@ -20,14 +20,12 @@ class _AllowLocationState extends State<AllowLocation> {
   bool _isEnabled = true;
 
   _triggerLocation() async {
-    print("I am in trigger");
     setState(() {
       _isProcessing = true;
       _isEnabled = false;
     });
     await EnableLocation().setLocation;
     setState(() {
-      print("I just exit trigger");
       _isProcessing = false;
       _isEnabled = true;
     });

@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 class LocationController extends GetxController {
   String currentLatitude = "";
   String currentLongitude = "";
-  String localGovernment = "";
+  RxString localGovernment = "".obs;
   String currentAddress = "";
-  bool hasPermission = false;  
+  bool hasPermission = false;
+
+  
 }

@@ -13,6 +13,8 @@ class EmergencyController extends GetxController {
   final String currentLongitude =
       Get.find<LocationController>().currentLongitude;
   final String currentLatitude = Get.find<LocationController>().currentLatitude;
+  final LocationController locationController = Get.put(LocationController());
+  // LocationController controller = Get.find<LocationController>();
 
   final nearbyPlaces = <NearbyPlace>[];
   final emergencyContacts = <EmergencyContact>[];
@@ -28,7 +30,8 @@ class EmergencyController extends GetxController {
 
     try {
       final jsonData = await emergenciesApi.fetchData();
-      print('Na init');
+      locationController.localGovernment.value = jsonData['localGovt'];
+      // print(currentLocalGovernment);
 
       final List<NearbyPlace> fetchPlaces = jsonData['nearby_places']
           ?.map((json) => NearbyPlace.fromJson(json))
@@ -41,7 +44,6 @@ class EmergencyController extends GetxController {
               ?.map((json) => EmergencyContact.fromJson(json))
               .toList()
               .cast<EmergencyContact>();
-
       emergencyContacts.assignAll(fetchedContact);
 
       final List<NotablePerson> fetchPerson = jsonData['notablePeople']
@@ -56,7 +58,7 @@ class EmergencyController extends GetxController {
           .cast<EmergencyTip>();
       emergencyTips.assignAll(fetchTips);
     } catch (e) {
-      print('Error fetching data: $e');
+      print('Error in process of fetching data: $e');
     }
   }
 }

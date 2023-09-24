@@ -4,6 +4,8 @@ class AppDimensions {
   static double screenHeight = Get.context!.height;
   static double screenWidth = Get.context!.width;
 
+  static double font75 = screenHeight / 18;
+  static double font50 = screenHeight / 27;
   static double font32 = screenHeight / 42.18;
   static double font24 = screenHeight / 56.25;
   static double font20 = screenHeight / 67.5;
@@ -12,6 +14,7 @@ class AppDimensions {
 
   static double icon15 = screenHeight / 90;
 
+  static double paddingLittle = screenHeight / 100;
   static double paddingSmall = screenHeight / 79.4;
   static double paddingMain = screenWidth / 20;
 
@@ -30,6 +33,7 @@ class AppDimensions {
 
   static double height300 = screenHeight / 4.5;
   static double height200 = screenHeight / 6.75;
+  static double height150 = screenHeight / 9;
   static double height120 = screenHeight / 11.25;
   static double height100 = screenHeight / 13.5;
 

@@ -17,11 +17,21 @@ class UserInfo {
     TextEditingController emergencyContact,
     TextEditingController emergencyContactRelationship,
     TextEditingController emergencyContactNumber,
+    bool isUpdating,
   ) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     final token = pref.getString('token') ?? '';
-    final url = Uri.parse(AppUrls.baseUrl + AppUrls.createBasicInfo);
-    final response = await http.post(
+    var url = Uri.parse(AppUrls.baseUrl + AppUrls.createBasicInfo);
+    var requestType;
+    if (isUpdating) {
+      url = Uri.parse(AppUrls.baseUrl + AppUrls.updateBasicInfo);
+      requestType = http.patch;
+    } else {
+      url = Uri.parse(AppUrls.baseUrl + AppUrls.updateBasicInfo);
+      requestType = http.post;
+    }
+
+    final response = await requestType(
       url,
       headers: {'Authorization': token, 'Content-Type': 'application/json'},
       body: jsonEncode({
@@ -37,15 +47,23 @@ class UserInfo {
       }),
     );
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       final responseData = jsonDecode(response.body);
       print('Data submitted successfully: $responseData');
-      Get.snackbar('Success', 'Personal Information saved',colorText: AppColors.mainColor);
+      Get.snackbar('Success', 'Personal Information saved',
+          colorText: AppColors.mainColor);
+      return true;
+    } else if (response.statusCode == 200) {
+      final responseData = jsonDecode(response.body);
+      print('Data submitted successfully: $responseData');
+      Get.snackbar('Success', 'Personal Information Updated',
+          colorText: AppColors.mainColor);
       return true;
     } else {
+      print(token);
       print('Error submitting data: ${response.statusCode}');
       print('Response body: ${response.body}');
-      Get.snackbar('Error', 'An Error Occured',colorText: AppColors.mainColor);
+      Get.snackbar('Error', 'An Error Occured', colorText: AppColors.mainColor);
       return false;
     }
   }
@@ -56,11 +74,20 @@ class UserInfo {
     TextEditingController allergies,
     TextEditingController otherConditions,
     TextEditingController familyDoctorContact,
+    bool isUpdating,
   ) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     final token = pref.getString('token') ?? '';
-    final url = Uri.parse(AppUrls.baseUrl + AppUrls.submitMedicalInfo);
-    final response = await http.post(
+    var url = Uri.parse(AppUrls.baseUrl + AppUrls.createMedicalInfo);
+    var requestType;
+    if (isUpdating) {
+      url = Uri.parse(AppUrls.baseUrl + AppUrls.updateMedicalInfo);
+      requestType = http.patch;
+    } else {
+      url = Uri.parse(AppUrls.baseUrl + AppUrls.createMedicalInfo);
+      requestType = http.post;
+    }
+    final response = await requestType(
       url,
       headers: {'Authorization': token, 'Content-Type': 'application/json'},
       body: jsonEncode({
@@ -71,17 +98,57 @@ class UserInfo {
         'famDocContact': familyDoctorContact.text,
       }),
     );
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       final responseData = jsonDecode(response.body);
       print('Data submitted successfully: $responseData');
-      Get.snackbar('Success', 'Personal Information saved',colorText: AppColors.mainColor);
+      Get.snackbar('Success', 'Medical Information saved',
+          colorText: AppColors.mainColor);
+      return true;
+    } else if (response.statusCode == 200) {
+      final responseData = jsonDecode(response.body);
+      print('Medical Info updtaed successfully: $responseData');
+      Get.snackbar('Success', 'Medical Information Updated',
+          colorText: AppColors.mainColor);
       return true;
     } else {
-      
       print('Error submitting data: ${response.statusCode}');
       print('Response body: ${response.body}');
-      Get.snackbar('Error', 'An Error Occured',colorText: AppColors.mainColor);
+      Get.snackbar('Error', 'An Error Occured', colorText: AppColors.mainColor);
       return false;
+    }
+  }
+
+  Future<dynamic> fetchBasicInfo() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    final token = pref.getString('token') ?? '';
+    final url = Uri.parse(AppUrls.baseUrl + AppUrls.getBasicInfo);
+    final response = await http.get(url, headers: {'Authorization': token});
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonData = json.decode(response.body);
+      return jsonData;
+    } else {
+      print('Error fetching In: ${response.statusCode}');
+      print('Response body for fetching ${response.body}');
+
+      throw Exception('Failed to load data');
+    }
+  }
+
+  Future<dynamic> fetchMedicalInfo() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    final token = pref.getString('token') ?? '';
+    final url = Uri.parse(AppUrls.baseUrl + AppUrls.getMedicalInfo);
+    final response = await http.get(url, headers: {'Authorization': token});
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonData = json.decode(response.body);
+      return jsonData;
+    } else {
+      print('Error fetching In: ${response.statusCode}');
+      print('Response body for fetching ${response.body}');
+
+      throw Exception('Failed to load data');
     }
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quickcall/api/information.dart';
+import 'package:quickcall/models/user_model.dart';
 import 'package:quickcall/routes/routes.dart';
 import 'package:quickcall/utils/colors.dart';
 import 'package:quickcall/utils/dimension.dart';
@@ -8,7 +9,8 @@ import 'package:quickcall/widgets/button_widgets.dart';
 import 'package:quickcall/widgets/text_input_widget.dart';
 
 class MedicalInformation extends StatefulWidget {
-  const MedicalInformation({super.key});
+  const MedicalInformation({super.key, this.initialData});
+  final MedicalInformaton? initialData;
 
   @override
   State<MedicalInformation> createState() => _MedicalInformationState();
@@ -16,21 +18,21 @@ class MedicalInformation extends StatefulWidget {
 
 class _MedicalInformationState extends State<MedicalInformation> {
   final _formkey = GlobalKey<FormState>();
-  late final TextEditingController _bloodGroup;
-  late final TextEditingController _genotype;
-  late final TextEditingController _allergies;
-  late final TextEditingController _otherConditions;
-  late final TextEditingController _familyDoctorContact;
+  final TextEditingController _bloodGroup = TextEditingController();
+  final TextEditingController _genotype = TextEditingController();
+  final TextEditingController _allergies = TextEditingController();
+  final TextEditingController _otherConditions = TextEditingController();
+  final TextEditingController _familyDoctorContact = TextEditingController();
   bool isEnabled = false;
   bool isProcessing = false;
 
   @override
   void initState() {
-    _bloodGroup = TextEditingController();
-    _genotype = TextEditingController();
-    _allergies = TextEditingController();
-    _otherConditions = TextEditingController();
-    _familyDoctorContact = TextEditingController();
+    if (widget.initialData != null) {
+      _bloodGroup.text = widget.initialData!.bloodType;
+      _genotype.text = widget.initialData!.genotype;
+      _familyDoctorContact.text = widget.initialData?.famDocContact ?? '';
+    }
 
     _bloodGroup.addListener(() {
       checkFieldValue();
@@ -104,6 +106,8 @@ class _MedicalInformationState extends State<MedicalInformation> {
                   InfoTextInputWidget(
                     label: "Blood Group",
                     inputController: _bloodGroup,
+                    isReadOnly:
+                        widget.initialData?.bloodType != null ? false : true,
                   ),
                   SizedBox(
                     height: AppDimensions.spacing20,
@@ -111,6 +115,8 @@ class _MedicalInformationState extends State<MedicalInformation> {
                   InfoTextInputWidget(
                     label: "Genotype",
                     inputController: _genotype,
+                    isReadOnly:
+                        widget.initialData?.genotype != null ? false : true,
                   ),
                   SizedBox(
                     height: AppDimensions.spacing20,
@@ -136,12 +142,6 @@ class _MedicalInformationState extends State<MedicalInformation> {
                   SizedBox(
                     height: AppDimensions.spacing200,
                   ),
-                  // const ActionButton(
-                  //   text: "Skip",
-                  //   routeTo: AppRoutes.welcome,
-                  //   isEnabled: true,
-                  //   isProcessing: false,
-                  // ),
                   SizedBox(
                     height: AppDimensions.spacing20,
                   ),
@@ -149,6 +149,7 @@ class _MedicalInformationState extends State<MedicalInformation> {
                     text: "Continue",
                     isEnabled: isEnabled,
                     isProcessing: false,
+                    onPressedFunction: createMedicalInfo,
                   ),
                 ],
               ),
@@ -169,19 +170,20 @@ class _MedicalInformationState extends State<MedicalInformation> {
     super.dispose();
   }
 
-  Future<void> createBasicInfo() async {
+  Future<void> createMedicalInfo() async {
     setState(() {
       isProcessing = true;
       isEnabled = false;
     });
-    final bool createInfoResponse = await UserInfo().submitMedicalInfo(
-        _bloodGroup,
-        _genotype,
-        _allergies,
-        _otherConditions,
-        _familyDoctorContact,
-   );
-    if (createInfoResponse) {
+    final bool submitInfoResponse = await UserInfo().submitMedicalInfo(
+      _bloodGroup,
+      _genotype,
+      _allergies,
+      _otherConditions,
+      _familyDoctorContact,
+      widget.initialData != null ? true : false,
+    );
+    if (submitInfoResponse) {
       Get.offAndToNamed(AppRoutes.welcome);
     } else {}
     setState(() {

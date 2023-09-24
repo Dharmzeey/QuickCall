@@ -57,7 +57,7 @@ class EmergencyInformation extends StatelessWidget {
                   routeTo: AppRoutes.emergencyLines,
                   args: {
                     'emergencyLines': controller.emergencyContacts,
-                    'title': "Contacts"
+                    'title': "Emergency Contacts"
                   },
                   iconToShow: emergencyLinesIcon),
               SizedBox(
@@ -78,7 +78,7 @@ class EmergencyInformation extends StatelessWidget {
               EmergencyInfoWidget(
                 iconToShow: emergencyTipIcon,
                 text: emergencyTip,
-                routeTo: AppRoutes.emergencyTips,
+                routeTo: AppRoutes.specificEmergencyTips,
                 args: {'tips': controller.emergencyTips, 'title': emergencyTip},
               ),
               SizedBox(

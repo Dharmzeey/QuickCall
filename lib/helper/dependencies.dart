@@ -13,9 +13,11 @@ Future<void> init() async {
   // Controller
   Get.put(LocationController());
 
-Get.put<EmergencyController>(EmergencyController(emergencyType: 'Medical'), tag: 'Medical');
-Get.put<EmergencyController>(EmergencyController(emergencyType: 'Fire'), tag: 'Fire');
-Get.put<EmergencyController>(EmergencyController(emergencyType: 'Police'), tag: 'Police');
-
-
+// Fetch all the emergencies at launch
+  Get.put<EmergencyController>(EmergencyController(emergencyType: 'Medical'),
+      tag: 'Medical');
+  Get.put<EmergencyController>(EmergencyController(emergencyType: 'Fire'),
+      tag: 'Fire');
+  Get.put<EmergencyController>(EmergencyController(emergencyType: 'Police'),
+      tag: 'Police');
 }

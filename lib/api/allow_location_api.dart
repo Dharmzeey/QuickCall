@@ -41,13 +41,11 @@ class EnableLocation {
 
   Future<void> _setLocation() async {
     final hasPermission = await _handleLocationPermission();
-
     if (!hasPermission) return;
     await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
         .then((Position position) async {
       locationController.currentLatitude = position.latitude.toString();
       locationController.currentLongitude = position.longitude.toString();
-
       _currentPosition = position;
       await _getAddressFromLatLng(_currentPosition!);
     }).catchError((e) {});
@@ -62,7 +60,7 @@ class EnableLocation {
         .then((List<Placemark> placemarks) {
       Placemark place = placemarks[0];
       locationController.hasPermission = true;
-      locationController.localGovernment = '${place.subAdministrativeArea}';
+      // locationController.localGovernment = '${place.subAdministrativeArea}';
       locationController.currentAddress =
           '${place.street}, ${place.subLocality}, ${place.subAdministrativeArea}, ${place.postalCode}';
     }).catchError((e) {});

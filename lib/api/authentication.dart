@@ -20,28 +20,20 @@ class Authentication {
     );
 
     if (response.statusCode == 201) {
-      final Map<String, String> headers = response.headers;
-      if (headers.containsKey('Authorization')) {
-        SharedPreferences pref = await SharedPreferences.getInstance();
-        final String token = headers['Authorization'] ?? '';
-        pref.setString('token', token);
-        print('Token: $token');
-      }
-
       final responseData = jsonDecode(response.body);
       print('Sign-up successful: $responseData');
       Get.snackbar('Success', 'Sign up successful',
           colorText: AppColors.mainColor);
       return true;
     } else {
-      Get.snackbar('Error', 'AN error occured', colorText: AppColors.mainColor);
+      Get.snackbar('Error', response.body, colorText: AppColors.mainColor);
       print('Error signing up: ${response.statusCode}');
       print('Response body: ${response.body}');
       return false;
     }
   }
 
-  Future<bool> signIn(TextEditingController userNameController,
+  Future<dynamic> signIn(TextEditingController userNameController,
       TextEditingController passwordController) async {
     final url = Uri.parse(AppUrls.baseUrl + AppUrls.signIn);
     final response = await http.post(
@@ -55,20 +47,19 @@ class Authentication {
 
     if (response.statusCode == 200) {
       final Map<String, String> headers = response.headers;
-      if (headers.containsKey('Authorization')) {
+      if (headers.containsKey('authorization')) {
         SharedPreferences pref = await SharedPreferences.getInstance();
-        final String token = headers['Authorization'] ?? '';
+        final String token = headers['authorization'] ?? '';
         pref.setString('token', token);
-        print('Token: $token');
       }
-
       final responseData = jsonDecode(response.body);
-      print('Sign-Ip successful: $responseData');
-      Get.snackbar('Success', 'Sign Ip successful',
+      print(responseData);
+      print('Sign In successful: $responseData');
+      Get.snackbar('Success', 'Sign In successful',
           colorText: AppColors.mainColor);
-      return true;
+      return responseData;
     } else {
-      Get.snackbar('Error', 'An error occured', colorText: AppColors.mainColor);
+      Get.snackbar('Error', response.body, colorText: AppColors.mainColor);
       print('Error signing In: ${response.statusCode}');
       print('Response body: ${response.body}');
       return false;

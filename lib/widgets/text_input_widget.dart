@@ -3,10 +3,11 @@ import 'package:quickcall/utils/colors.dart';
 import 'package:quickcall/utils/dimension.dart';
 
 class InfoTextInputWidget extends StatelessWidget {
+  const InfoTextInputWidget(
+      {super.key, required this.label, required this.inputController, this.isReadOnly});
   final String label;
   final TextEditingController inputController;
-  const InfoTextInputWidget(
-      {super.key, required this.label, required this.inputController});
+  final bool? isReadOnly;
 
   @override
   Widget build(BuildContext context) {
@@ -14,17 +15,17 @@ class InfoTextInputWidget extends StatelessWidget {
       style: const TextStyle(color: AppColors.mainColor),
       controller: inputController,
       decoration: InputDecoration(
-          enabledBorder: OutlineInputBorder(
-            borderSide:
-                const BorderSide(color: AppColors.mainColor, width: 1.0),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          label: Text(label),
-          labelStyle: TextStyle(
-              color: AppColors.mainColor,
-              fontSize: AppDimensions.font20,
-              fontWeight: FontWeight.w400),
-          border: const OutlineInputBorder()),
+        enabledBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: AppColors.mainColor, width: 1.0),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        label: Text(label),
+        labelStyle: TextStyle(
+            color: AppColors.mainColor,
+            fontSize: AppDimensions.font20,
+            fontWeight: FontWeight.w400),
+        border: const OutlineInputBorder(),
+      ),
     );
   }
 }

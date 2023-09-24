@@ -1,31 +1,37 @@
 // To parse this JSON data, do
 //
-//     final temperatures = temperaturesFromJson(jsonString);
+//     final welcome = welcomeFromJson(jsonString);
 
 import 'dart:convert';
 
-Temperatures temperaturesFromJson(String str) => Temperatures.fromJson(json.decode(str));
+Welcome welcomeFromJson(String str) => Welcome.fromJson(json.decode(str));
 
-String temperaturesToJson(Temperatures data) => json.encode(data.toJson());
+String welcomeToJson(Welcome data) => json.encode(data.toJson());
 
-class Temperatures {
+class Welcome {
     String status;
     List<EmergencyContact> emergencyContacts;
     List<NotablePerson> notablePeople;
     List<NearbyPlace> nearbyPlaces;
+    List<EmergencyTip> emergencyTips;
+    String localGovt;
 
-    Temperatures({
+    Welcome({
         required this.status,
         required this.emergencyContacts,
         required this.notablePeople,
         required this.nearbyPlaces,
+        required this.emergencyTips,
+        required this.localGovt,
     });
 
-    factory Temperatures.fromJson(Map<String, dynamic> json) => Temperatures(
+    factory Welcome.fromJson(Map<String, dynamic> json) => Welcome(
         status: json["status"],
         emergencyContacts: List<EmergencyContact>.from(json["emergencyContacts"].map((x) => EmergencyContact.fromJson(x))),
         notablePeople: List<NotablePerson>.from(json["notablePeople"].map((x) => NotablePerson.fromJson(x))),
         nearbyPlaces: List<NearbyPlace>.from(json["nearby_places"].map((x) => NearbyPlace.fromJson(x))),
+        emergencyTips: List<EmergencyTip>.from(json["emergencyTips"].map((x) => EmergencyTip.fromJson(x))),
+        localGovt: json["localGovt"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -33,6 +39,8 @@ class Temperatures {
         "emergencyContacts": List<dynamic>.from(emergencyContacts.map((x) => x.toJson())),
         "notablePeople": List<dynamic>.from(notablePeople.map((x) => x.toJson())),
         "nearby_places": List<dynamic>.from(nearbyPlaces.map((x) => x.toJson())),
+        "emergencyTips": List<dynamic>.from(emergencyTips.map((x) => x.toJson())),
+        "localGovt": localGovt,
     };
 }
 
@@ -149,10 +157,10 @@ class NearbyPlace {
 }
 
 class OpeningHours {
-    bool? openNow;
+    bool openNow;
 
     OpeningHours({
-        this.openNow,
+        required this.openNow,
     });
 
     factory OpeningHours.fromJson(Map<String, dynamic> json) => OpeningHours(
@@ -172,7 +180,8 @@ class NotablePerson {
     String whatsappContact;
     DateTime createdAt;
     DateTime updatedAt;
-    String lgaId;
+    String? lgaId;
+    String? stateId;
 
     NotablePerson({
         required this.notableId,
@@ -182,7 +191,8 @@ class NotablePerson {
         required this.whatsappContact,
         required this.createdAt,
         required this.updatedAt,
-        required this.lgaId,
+        this.lgaId,
+        this.stateId,
     });
 
     factory NotablePerson.fromJson(Map<String, dynamic> json) => NotablePerson(
@@ -194,6 +204,7 @@ class NotablePerson {
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
         lgaId: json["LGAId"],
+        stateId: json["stateId"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -205,5 +216,6 @@ class NotablePerson {
         "createdAt": createdAt.toIso8601String(),
         "updatedAt": updatedAt.toIso8601String(),
         "LGAId": lgaId,
+        "stateId": stateId,
     };
 }

@@ -30,7 +30,7 @@ class EmergencyTips extends StatelessWidget {
             return ListTile(
               title: Text(
                 tips[index].description,
-                style: CustomTextStyles.primaryTextStyle,
+                style: CustomTextStyles.primaryTextStyle.copyWith(height: 1.7),
               ),
             );
           },

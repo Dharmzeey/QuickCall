@@ -37,10 +37,10 @@ class _SignUpState extends State<SignUp> {
     }
   }
 
-  void _setActivationStatus() async {
+  void _setAnonymousStatus() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     pref.setBool('isActivated', true);
-    pref.setString('authenticationStatus', 'anonymous');
+    pref.setBool('isAnonymous', true);
     Get.offAndToNamed(AppRoutes.welcome);
   }
 
@@ -133,13 +133,13 @@ class _SignUpState extends State<SignUp> {
                   ],
                 ),
                 SizedBox(
-                  height: AppDimensions.spacing350,
+                  height: AppDimensions.spacing200,
                 ),
                 ActionButton(
                   text: 'Skip for Now',
                   isEnabled: true,
                   isProcessing: false,
-                  onPressedFunction: _setActivationStatus,
+                  onPressedFunction: _setAnonymousStatus,
                 ),
                 SizedBox(
                   height: AppDimensions.spacing10,
@@ -166,7 +166,7 @@ class _SignUpState extends State<SignUp> {
     final bool signUpResponse =
         await Authentication().signUp(_username, _password);
     if (signUpResponse) {
-      Get.offAndToNamed(AppRoutes.welcome);
+      Get.offAndToNamed(AppRoutes.signIn);
     } else {}
     setState(() {
       isProcessing = false;

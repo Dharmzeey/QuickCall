@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart';
 import 'package:quickcall/api/authentication.dart';
+import 'package:quickcall/controller/user_controller.dart';
 import 'package:quickcall/routes/routes.dart';
 import 'package:quickcall/utils/colors.dart';
 import 'package:quickcall/utils/dimension.dart';
@@ -24,6 +26,7 @@ class _SignInState extends State<SignIn> {
   late final TextEditingController _password;
   bool isEnabled = false;
   bool isProcessing = false;
+  final displayNameController = Get.put(DisplayNameController());
 
   void checkFieldValue(String username, String password) {
     if (username.length > 3 && password.length > 5) {
@@ -35,13 +38,6 @@ class _SignInState extends State<SignIn> {
         isEnabled = false;
       });
     }
-  }
-
-  void _setActivationStatus() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    pref.setBool('isActivated', true);
-    pref.setString('authenticationStatus', 'anonymous');
-    Get.offAndToNamed(AppRoutes.welcome);
   }
 
   @override
@@ -133,19 +129,10 @@ class _SignInState extends State<SignIn> {
                   height: AppDimensions.spacing350,
                 ),
                 ActionButton(
-                  text: 'Skip for Now',
-                  isEnabled: true,
-                  isProcessing: false,
-                  onPressedFunction: _setActivationStatus,
-                ),
-                SizedBox(
-                  height: AppDimensions.spacing10,
-                ),
-                ActionButton(
                   text: "Next",
                   isEnabled: isEnabled,
                   isProcessing: false,
-                  onPressedFunction: createUser,
+                  onPressedFunction: signInUser,
                 ),
               ],
             ),
@@ -155,19 +142,38 @@ class _SignInState extends State<SignIn> {
     );
   }
 
-  Future<void> createUser() async {
+  Future<void> signInUser() async {
     setState(() {
       isProcessing = true;
       isEnabled = false;
     });
-    final bool signInResponse =
+    final dynamic signInResponse =
         await Authentication().signIn(_username, _password);
-    if (signInResponse) {
-      Get.offAndToNamed(AppRoutes.personalInformation);
-    } else {}
-    setState(() {
-      isProcessing = false;
-      isEnabled = true;
-    });
+    if (signInResponse != null) {
+      print('Sign In response: $signInResponse');
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setBool("isActivated", true);
+      print('Sign In response: $signInResponse');
+
+      if (signInResponse['status'] == 'success') {
+        if (signInResponse['profileFilled'] &&
+            signInResponse['medInfo'] != null) {
+          displayNameController.displayName =
+              signInResponse['user']['firstName'];
+          Get.offAndToNamed(AppRoutes.welcome);
+        } else if (signInResponse['profileFilled']) {
+          displayNameController.displayName =
+              signInResponse['user']['firstName'];
+          Get.toNamed(AppRoutes.medicalInformation);
+        } else {
+          displayNameController.displayName = "User".obs;
+          Get.offAndToNamed(AppRoutes.personalInformation);
+        }
+      } else {}
+      setState(() {
+        isProcessing = false;
+        isEnabled = true;
+      });
+    }
   }
 }

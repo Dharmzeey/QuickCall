@@ -1,10 +1,12 @@
 import 'package:get/get.dart';
+import 'package:quickcall/screens/emergency/general_emergency_tips.dart';
+import 'package:quickcall/screens/feedback.dart';
 import 'package:quickcall/screens/onboarding/allow_location_screen.dart';
 import 'package:quickcall/screens/emergency/emergency_info_screen.dart';
 import 'package:quickcall/screens/emergency/emergency_lines.dart';
 import 'package:quickcall/screens/emergency/emergency_tips.dart';
 import 'package:quickcall/screens/emergency/officials_contact_screen.dart';
-import 'package:quickcall/screens/onboarding/login_screen.dart';
+import 'package:quickcall/screens/onboarding/signin_screen.dart';
 import 'package:quickcall/screens/onboarding/medical_information_screen.dart';
 import 'package:quickcall/screens/onboarding/onboarding_screen.dart';
 import 'package:quickcall/screens/onboarding/personal_information_screen.dart';
@@ -24,7 +26,9 @@ class AppRoutes {
   static const String proximalEmergencyPlaces = "/proximal-emergency-places";
   static const String emergencyLines = "/emergency-lines";
   static const String officialsContact = "/official-contacts";
-  static const String emergencyTips = "/emergency-tips";
+  static const String specificEmergencyTips = "/emergency-tips";
+  static const String generalEmergencyTips = "/emergency-emergency-tips";
+  static const String feedback = "/feedback";
 
   static List<GetPage> routes = [
     GetPage(name: initial, page: () => const OnBoarding()),
@@ -38,10 +42,10 @@ class AppRoutes {
     GetPage(
         name: proximalEmergencyPlaces,
         page: () => const ProximalEmergencyPlaces()),
-    GetPage(
-        name: emergencyLines,
-        page: () => const EmergencyLines()),
+    GetPage(name: emergencyLines, page: () => const EmergencyLines()),
     GetPage(name: officialsContact, page: () => OfficialsContact()),
-    GetPage(name: emergencyTips, page: () => const EmergencyTips()),
+    GetPage(name: specificEmergencyTips, page: () => const EmergencyTips()),
+    GetPage(name: generalEmergencyTips, page: () => const GeneralTips()),
+    GetPage(name: feedback, page: () => const FeedBack()),
   ];
 }

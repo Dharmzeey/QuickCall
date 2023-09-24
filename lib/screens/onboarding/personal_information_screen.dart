@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quickcall/api/information.dart';
+import 'package:quickcall/models/user_model.dart';
 import 'package:quickcall/routes/routes.dart';
 import 'package:quickcall/utils/colors.dart';
 import 'package:quickcall/utils/dimension.dart';
@@ -9,7 +10,8 @@ import 'package:quickcall/widgets/button_widgets.dart';
 import 'package:quickcall/widgets/text_input_widget.dart';
 
 class PersonalInformation extends StatefulWidget {
-  const PersonalInformation({super.key});
+  const PersonalInformation({super.key, this.initialData});
+  final User? initialData;
 
   @override
   State<PersonalInformation> createState() => _PersonalInformationState();
@@ -17,14 +19,16 @@ class PersonalInformation extends StatefulWidget {
 
 class _PersonalInformationState extends State<PersonalInformation> {
   final _formKey = GlobalKey<FormState>();
-  late final TextEditingController _firstName;
-  late final TextEditingController _lastName;
-  late final TextEditingController _email;
-  late final TextEditingController _phoneNumber;
-  late final TextEditingController _age;
-  late final TextEditingController _emergencyContact;
-  late final TextEditingController _emergencyContactrelationship;
-  late final TextEditingController _emergencyContactphoneNumber;
+  final TextEditingController _firstName = TextEditingController();
+  final TextEditingController _lastName = TextEditingController();
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _phoneNumber = TextEditingController();
+  final TextEditingController _age = TextEditingController();
+  final TextEditingController _emergencyContact = TextEditingController();
+  final TextEditingController _emergencyContactrelationship =
+      TextEditingController();
+  final TextEditingController _emergencyContactphoneNumber =
+      TextEditingController();
   bool isEnabled = false;
   bool isProcessing = false;
   String? _selectedGender;
@@ -34,15 +38,20 @@ class _PersonalInformationState extends State<PersonalInformation> {
   @override
   void initState() {
     super.initState();
-    _firstName = TextEditingController();
-    _lastName = TextEditingController();
-    _email = TextEditingController();
-    _phoneNumber = TextEditingController();
-    _age = TextEditingController();
-    _emergencyContact = TextEditingController();
-    _emergencyContactrelationship = TextEditingController();
-    _emergencyContactphoneNumber = TextEditingController();
-
+    if (widget.initialData != null) {
+      _firstName.text = widget.initialData!.firstName;
+      _lastName.text = widget.initialData!.lastName;
+      _email.text = widget.initialData!.email;
+      _phoneNumber.text = widget.initialData!.phoneNo1;
+      _age.text = widget.initialData!.age;
+      _selectedGender = widget.initialData!.gender;
+      _emergencyContact.text = widget.initialData?.emergencyPhoneNo ?? '';
+      _emergencyContactrelationship.text =
+          widget.initialData?.relationship ?? '';
+      _emergencyContactphoneNumber.text =
+          widget.initialData?.emergencyPhoneNo ?? '';
+      isGenderSelected = true;
+    }
     _firstName.addListener(() {
       _checkFieldValue();
     });
@@ -67,15 +76,11 @@ class _PersonalInformationState extends State<PersonalInformation> {
         _phoneNumber.text.length > 10 &&
         _age.text.length > 1 &&
         isGenderSelected == true) {
-      print(isGenderSelected);
-      print("All ready");
       setState(() {
         isEnabled = true;
       });
     } else {
       setState(() {
-        print(isGenderSelected);
-        print("nit ready");
         isEnabled = false;
       });
     }
@@ -209,7 +214,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                     text: "Continue",
                     isEnabled: isEnabled,
                     isProcessing: isProcessing,
-                    onPressedFunction: createBasicInfo,
+                    onPressedFunction: submitBasicInfo,
                   )
                 ],
               ),
@@ -234,25 +239,28 @@ class _PersonalInformationState extends State<PersonalInformation> {
     super.dispose();
   }
 
-  Future<void> createBasicInfo() async {
-    print("i am before signup");
+  Future<void> submitBasicInfo() async {
     setState(() {
       isProcessing = true;
       isEnabled = false;
     });
-    final bool createInfoResponse = await UserInfo().submitPersonalInfo(
-        _firstName,
-        _lastName,
-        _email,
-        _phoneNumber,
-        _selectedGender!,
-        _age,
-        _emergencyContact,
-        _emergencyContactrelationship,
-        _emergencyContactphoneNumber);
-    if (createInfoResponse) {
+    final bool submitInfoResponse = await UserInfo().submitPersonalInfo(
+      _firstName,
+      _lastName,
+      _email,
+      _phoneNumber,
+      _selectedGender!,
+      _age,
+      _emergencyContact,
+      _emergencyContactrelationship,
+      _emergencyContactphoneNumber,
+      widget.initialData != null ? true : false,
+    );
+    if (widget.initialData == null && submitInfoResponse) {
       Get.offAndToNamed(AppRoutes.medicalInformation);
-    } else {}
+    } else {
+      Get.toNamed(AppRoutes.welcome);
+    }
     setState(() {
       isProcessing = false;
       isEnabled = true;
