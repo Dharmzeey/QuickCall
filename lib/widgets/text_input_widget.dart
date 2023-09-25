@@ -7,7 +7,8 @@ class InfoTextInputWidget extends StatelessWidget {
     super.key,
     required this.label,
     required this.inputController,
-    this.isReadOnly, this.isTextObscured,
+    this.isReadOnly,
+    this.isTextObscured,
   });
   final String label;
   final TextEditingController inputController;
@@ -25,6 +26,8 @@ class InfoTextInputWidget extends StatelessWidget {
           borderSide: const BorderSide(color: AppColors.mainColor, width: 1.0),
           borderRadius: BorderRadius.circular(10),
         ),
+        contentPadding:
+            EdgeInsets.symmetric(horizontal: AppDimensions.paddingSmall),
         label: Text(label),
         labelStyle: TextStyle(
             color: AppColors.mainColor,

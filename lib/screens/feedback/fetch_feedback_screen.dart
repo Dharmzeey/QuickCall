@@ -39,7 +39,7 @@ class FetchFeedBacks extends StatelessWidget {
                 style: CustomTextStyles.primaryTextStyle,
               );
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return const Center(
+              return Center(
                 child: Text(
                   'You do not have any feedback',
                   style: CustomTextStyles.primaryTextStyle,

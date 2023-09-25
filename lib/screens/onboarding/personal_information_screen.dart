@@ -113,7 +113,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                         color: AppColors.mainColor),
                   ),
                   SizedBox(
-                    height: AppDimensions.spacing100,
+                    height: AppDimensions.spacing75,
                   ),
                   Row(
                     children: [
@@ -133,16 +133,16 @@ class _PersonalInformationState extends State<PersonalInformation> {
                     ],
                   ),
                   SizedBox(
-                    height: AppDimensions.spacing30,
+                    height: AppDimensions.spacing20,
                   ),
                   InfoTextInputWidget(label: "Email", inputController: _email),
                   SizedBox(
-                    height: AppDimensions.spacing30,
+                    height: AppDimensions.spacing20,
                   ),
                   InfoTextInputWidget(
                       label: "Phone Number", inputController: _phoneNumber),
                   SizedBox(
-                    height: AppDimensions.spacing30,
+                    height: AppDimensions.spacing20,
                   ),
                   Row(
                     children: [
@@ -175,12 +175,15 @@ class _PersonalInformationState extends State<PersonalInformation> {
                             );
                           }).toList(),
                           decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: AppDimensions.paddingSmall,
+                            ),
                             enabledBorder: OutlineInputBorder(
                               borderSide: const BorderSide(
                                   color: AppColors.mainColor, width: 1.0),
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            label: const Text(
+                            label: Text(
                               'Gender',
                               style: CustomTextStyles.primaryTextStyle,
                             ),
@@ -196,28 +199,28 @@ class _PersonalInformationState extends State<PersonalInformation> {
                     ],
                   ),
                   SizedBox(
-                    height: AppDimensions.spacing30,
+                    height: AppDimensions.spacing20,
                   ),
                   InfoTextInputWidget(
                       label: "Emergency Contact Name",
                       inputController: _emergencyContact),
                   SizedBox(
-                    height: AppDimensions.spacing30,
+                    height: AppDimensions.spacing20,
                   ),
                   InfoTextInputWidget(
                       label: "Relationship with the person above",
                       inputController: _emergencyContactrelationship),
                   SizedBox(
-                    height: AppDimensions.spacing30,
+                    height: AppDimensions.spacing20,
                   ),
                   InfoTextInputWidget(
                       label: "Phone Number of Emergency Contact",
                       inputController: _emergencyContactphoneNumber),
                   SizedBox(
-                    height: AppDimensions.spacing200,
+                    height: AppDimensions.spacing150,
                   ),
                   ActionButton(
-                    text: "Continue",
+                    text: widget.initialData != null ? "Submit" : "Continue",
                     isEnabled: isEnabled,
                     isProcessing: isProcessing,
                     onPressedFunction: submitBasicInfo,

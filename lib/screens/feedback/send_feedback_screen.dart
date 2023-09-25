@@ -64,7 +64,7 @@ class _FeedBackState extends State<FeedBack> {
                 ),
               ),
             ),
-            const Text(
+            Text(
               'How was the help received? ',
               style: CustomTextStyles.primaryTextStyle,
             ),
@@ -107,7 +107,7 @@ class _FeedBackState extends State<FeedBack> {
             SizedBox(
               height: AppDimensions.spacing20,
             ),
-            const Text(
+            Text(
               'Do you have a specific issue you would like to let us know about? ',
               style: CustomTextStyles.primaryTextStyle,
             ),

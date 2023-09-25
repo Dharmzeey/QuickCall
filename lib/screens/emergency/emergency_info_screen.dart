@@ -38,7 +38,7 @@ class EmergencyInformation extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(
-                height: AppDimensions.spacing150,
+                height: AppDimensions.spacing100,
               ),
               EmergencyInfoWidget(
                 iconToShow: helpNearYouIcon,

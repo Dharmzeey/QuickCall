@@ -20,7 +20,7 @@ class GeneralTips extends StatelessWidget {
           children: [
             Padding(
               padding: EdgeInsets.all(AppDimensions.paddingSmall),
-              child: const Text(
+              child: Text(
                 'Cultivating habits that can prepare you for various unforeseen situations is very important. Here are few habits;',
                 style: CustomTextStyles.primaryTextStyle,
               ),

@@ -65,12 +65,9 @@ class WelcomeScreen extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: AppDimensions.paddingMain),
         child: Column(
           children: [
-            SizedBox(
-              height: AppDimensions.spacing100,
-            ),
             Obx(
               () => CircleAvatar(
-                radius: 100,
+                radius: AppDimensions.width80,
                 child: displayDetailsController.displayGender.value == "Female"
                     ? const Image(image: AssetImage("images/avatar_female.png"))
                     : const Image(
@@ -85,7 +82,7 @@ class WelcomeScreen extends StatelessWidget {
               () => Text(
                 displayDetailsController.displayName.value,
                 style: TextStyle(
-                    color: AppColors.mainColor, fontSize: AppDimensions.font24),
+                    color: AppColors.mainColor, fontSize: AppDimensions.font26),
               ),
             ),
             SizedBox(
@@ -94,7 +91,7 @@ class WelcomeScreen extends StatelessWidget {
             Text(
               "WHAT IS YOUR EMERGENCY??",
               style: TextStyle(
-                  fontSize: AppDimensions.font24, color: AppColors.mainColor),
+                  fontSize: AppDimensions.font26, color: AppColors.mainColor),
             ),
             SizedBox(
               height: AppDimensions.spacing50,
@@ -125,7 +122,7 @@ class WelcomeScreen extends StatelessWidget {
               },
             ),
             SizedBox(
-              height: AppDimensions.spacing30,
+              height: AppDimensions.spacing20,
             ),
             EmergencyTypeWidget(
                 imageUrl: "images/medics.png",
@@ -152,7 +149,7 @@ class WelcomeScreen extends StatelessWidget {
                   'controller': Get.find<EmergencyController>(tag: 'Medical'),
                 }),
             SizedBox(
-              height: AppDimensions.spacing30,
+              height: AppDimensions.spacing20,
             ),
             EmergencyTypeWidget(
               imageUrl: "images/fire.png",
@@ -180,7 +177,7 @@ class WelcomeScreen extends StatelessWidget {
               },
             ),
             SizedBox(
-              height: AppDimensions.spacing200,
+              height: AppDimensions.spacing150,
             ),
             TextButton(
               onPressed: () {
@@ -273,7 +270,7 @@ class MyDrawer extends StatelessWidget {
                         ),
                         const Divider(),
                         MyListTile(
-                          text: 'Log Out',
+                          text: 'Sign Out',
                           icon: Icons.logout,
                           onTapFunction: toSignOut,
                         ),

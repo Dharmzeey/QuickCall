@@ -146,13 +146,10 @@ class _MedicalInformationState extends State<MedicalInformation> {
                     inputController: _familyDoctorContact,
                   ),
                   SizedBox(
-                    height: AppDimensions.spacing200,
-                  ),
-                  SizedBox(
-                    height: AppDimensions.spacing20,
+                    height: AppDimensions.spacing150,
                   ),
                   ActionButton(
-                    text: "Continue",
+                    text: widget.initialData != null ? "Submit" : "Continue",
                     isEnabled: isEnabled,
                     isProcessing: false,
                     onPressedFunction: createMedicalInfo,

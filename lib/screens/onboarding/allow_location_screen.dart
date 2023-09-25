@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:app_settings/app_settings.dart';
 import 'package:quickcall/api/allow_location_api.dart';
 import 'package:quickcall/controller/location_controller.dart';
+import 'package:quickcall/controller/user_controller.dart';
 import 'package:quickcall/routes/routes.dart';
 import 'package:quickcall/utils/colors.dart';
 import 'package:quickcall/utils/dimension.dart';
@@ -15,6 +17,7 @@ class AllowLocation extends StatefulWidget {
 
 class _AllowLocationState extends State<AllowLocation> {
   final LocationController locationController = Get.put(LocationController());
+  final displayDetailsController = Get.put(DisplayDetailsController());
 
   bool _isProcessing = false;
   bool _isEnabled = true;
@@ -29,6 +32,15 @@ class _AllowLocationState extends State<AllowLocation> {
       _isProcessing = false;
       _isEnabled = true;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (!locationController.hasPermission) {
+      _triggerLocation();
+      Get.put<UserProfileController>(UserProfileController());
+    }
   }
 
   @override
@@ -71,44 +83,50 @@ class _AllowLocationState extends State<AllowLocation> {
               height: AppDimensions.spacing350,
             ),
             FilledButton(
-                onPressed: () async {
-                  if (!locationController.hasPermission) {
-                    null;
-                  } else if (locationController.hasPermission) {
-                    Get.offAndToNamed(AppRoutes.signUp);
-                  } else if (_isEnabled) {
-                    await _triggerLocation();
-                  }
-                },
-                style: FilledButton.styleFrom(
-                  backgroundColor: _isEnabled
-                      ? AppColors.buttonColor
-                      : AppColors.disabledButtonColor,
-                  padding: EdgeInsets.all(AppDimensions.paddingSmall),
-                  minimumSize: Size(AppDimensions.screenWidth / 2,
-                      AppDimensions.screenHeight / 30),
-                ),
-                child: _isProcessing
-                    ? const CircularProgressIndicator()
-                    : (locationController.hasPermission
-                        ? Text(
-                            "Enable",
-                            style: TextStyle(
-                              fontSize: AppDimensions.font20,
-                              fontWeight: FontWeight.w400,
-                              color: _isEnabled
-                                  ? AppColors.mainColor
-                                  : AppColors.disabledTextColor,
-                            ),
-                          )
-                        : Text(
-                            "Location permission denied",
-                            style: TextStyle(
-                              fontSize: AppDimensions.font20,
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.disabledTextColor,
-                            ),
-                          ))),
+              onPressed: () async {
+                if (!locationController.hasPermission) {
+                  AppSettings.openAppSettings(type: AppSettingsType.location);
+                  await _triggerLocation();
+                  Get.put<UserProfileController>(UserProfileController());
+                  setState(() {});
+                  null;
+                } else if (locationController.hasPermission) {
+                  Get.put<UserProfileController>(UserProfileController());
+                  Get.offAndToNamed(AppRoutes.signUp);
+                } else if (_isEnabled) {
+                  await _triggerLocation();
+                }
+              },
+              style: FilledButton.styleFrom(
+                backgroundColor: _isEnabled
+                    ? AppColors.buttonColor
+                    : AppColors.disabledButtonColor,
+                padding: EdgeInsets.all(AppDimensions.paddingSmall),
+                minimumSize: Size(AppDimensions.screenWidth / 2,
+                    AppDimensions.screenHeight / 30),
+              ),
+              child: _isProcessing
+                  ? const CircularProgressIndicator()
+                  : (locationController.hasPermission
+                      ? Text(
+                          "Enable",
+                          style: TextStyle(
+                            fontSize: AppDimensions.font20,
+                            fontWeight: FontWeight.w400,
+                            color: _isEnabled
+                                ? AppColors.mainColor
+                                : AppColors.disabledTextColor,
+                          ),
+                        )
+                      : Text(
+                          "Location permission denied",
+                          style: TextStyle(
+                            fontSize: AppDimensions.font20,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.disabledTextColor,
+                          ),
+                        )),
+            ),
           ],
         ),
       ),

@@ -32,7 +32,7 @@ class ProximalEmergencyPlaces extends StatelessWidget {
                 itemCount: nearestHelp.length,
                 itemBuilder: (context, index) {
                   return Container(
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(5),
                     margin:
                         EdgeInsets.symmetric(vertical: AppDimensions.spacing10),
                     decoration: BoxDecoration(
@@ -45,7 +45,7 @@ class ProximalEmergencyPlaces extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
-                              width: AppDimensions.screenWidth / 1.3,
+                              width: AppDimensions.screenWidth / 1.4,
                               child: Text(
                                 nearestHelp[index].name,
                                 overflow: TextOverflow.ellipsis,
@@ -55,7 +55,7 @@ class ProximalEmergencyPlaces extends StatelessWidget {
                               ),
                             ),
                             SizedBox(
-                              width: AppDimensions.screenWidth / 1.3,
+                              width: AppDimensions.screenWidth / 1.4,
                               child: Text(
                                 nearestHelp[index].vicinity,
                                 overflow: TextOverflow.ellipsis,
@@ -93,7 +93,7 @@ class ProximalEmergencyPlaces extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.symmetric(vertical: AppDimensions.spacing20),
-              child: const Text(
+              child: Text(
                 'This reponse is generated based on your current location ',
                 style: CustomTextStyles.primaryTextStyle,
               ),

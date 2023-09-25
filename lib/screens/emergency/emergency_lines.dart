@@ -50,9 +50,10 @@ class EmergencyLines extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.phone_in_talk_rounded,
                           color: AppColors.mainColor,
+                          size: AppDimensions.font32,
                         ),
                         Text(
                           emergencyLines[index].emergencyNo,
@@ -60,43 +61,56 @@ class EmergencyLines extends StatelessWidget {
                               .copyWith(fontSize: AppDimensions.font18),
                         ),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            IconButton(
-                              onPressed: () {
-                                openWhatsAppChat(
-                                    emergencyLines[index].whatsappContact);
-                                showCustomDialogue(emergencyName,
-                                    emergencyLines[index].whatsappContact);
-                              },
-                              icon: const FaIcon(
-                                FontAwesomeIcons.whatsapp,
-                                color: AppColors.mainColor,
+                            SizedBox(
+                              width: AppDimensions.spacing50,
+                              child: IconButton(
+                                onPressed: () {
+                                  openWhatsAppChat(
+                                      emergencyLines[index].whatsappContact);
+                                  showCustomDialogue(emergencyName,
+                                      emergencyLines[index].whatsappContact);
+                                },
+                                icon: FaIcon(
+                                  FontAwesomeIcons.whatsapp,
+                                  color: AppColors.mainColor,
+                                  size: AppDimensions.font32,
+                                ),
                               ),
                             ),
-                            IconButton(
-                              onPressed: () {
-                                final bodyMessage =
-                                    'Quick Call, A $emergencyName Emergency...';
-                                openSMS(emergencyLines[index].whatsappContact,
-                                    bodyMessage);
-                                showCustomDialogue(emergencyName,
-                                    emergencyLines[index].whatsappContact);
-                              },
-                              icon: const Icon(
-                                Icons.message,
-                                color: AppColors.mainColor,
+                            SizedBox(
+                              width: AppDimensions.spacing50,
+                              child: IconButton(
+                                onPressed: () {
+                                  final bodyMessage =
+                                      'Quick Call, A $emergencyName Emergency...';
+                                  openSMS(emergencyLines[index].whatsappContact,
+                                      bodyMessage);
+                                  showCustomDialogue(emergencyName,
+                                      emergencyLines[index].whatsappContact);
+                                },
+                                icon: Icon(
+                                  Icons.message,
+                                  color: AppColors.mainColor,
+                                  size: AppDimensions.font32,
+                                ),
                               ),
                             ),
-                            IconButton(
-                              onPressed: () {
-                                openPhoneDialer(
-                                    emergencyLines[index].emergencyNo);
-                                showCustomDialogue(emergencyName,
-                                    emergencyLines[index].emergencyNo);
-                              },
-                              icon: const Icon(
-                                Icons.phone_in_talk,
-                                color: AppColors.mainColor,
+                            SizedBox(
+                              width: AppDimensions.spacing50,
+                              child: IconButton(
+                                onPressed: () {
+                                  openPhoneDialer(
+                                      emergencyLines[index].emergencyNo);
+                                  showCustomDialogue(emergencyName,
+                                      emergencyLines[index].emergencyNo);
+                                },
+                                icon: Icon(
+                                  Icons.phone_in_talk,
+                                  color: AppColors.mainColor,
+                                  size: AppDimensions.font32,
+                                ),
                               ),
                             )
                           ],
@@ -109,9 +123,10 @@ class EmergencyLines extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.symmetric(vertical: AppDimensions.spacing20),
-              child: const Text(
+              child: Text(
                 'This reponse is generated based on your current location ',
-                style: CustomTextStyles.primaryTextStyle,
+                style: CustomTextStyles.primaryTextStyle
+                    .copyWith(fontSize: AppDimensions.font18),
               ),
             ),
           ],

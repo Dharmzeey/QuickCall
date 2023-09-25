@@ -23,12 +23,12 @@ class EmergencyTypeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: AppDimensions.spacing20),
+      padding: EdgeInsets.only(left: AppDimensions.spacing18),
       child: Row(
         children: [
           Image(image: AssetImage(imageUrl)),
           SizedBox(
-            width: AppDimensions.spacing20,
+            width: AppDimensions.spacing18,
           ),
           FilledButton(
             onPressed: () {
@@ -90,8 +90,10 @@ class EmergencyInfoWidget extends StatelessWidget {
               SizedBox(width: AppDimensions.spacing10),
               Text(
                 text,
-                style: CustomTextStyles.primaryTextStyle
-                    .copyWith(color: AppColors.bgColor),
+                style: CustomTextStyles.primaryTextStyle.copyWith(
+                  color: AppColors.bgColor,
+                  fontSize: AppDimensions.font18,
+                ),
               ),
             ],
           )),

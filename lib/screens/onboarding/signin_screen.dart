@@ -6,8 +6,8 @@ import 'package:quickcall/routes/routes.dart';
 import 'package:quickcall/utils/colors.dart';
 import 'package:quickcall/utils/dimension.dart';
 import 'package:quickcall/utils/styles.dart';
-import 'package:quickcall/widgets/auth_type_divide_widget.dart';
-import 'package:quickcall/widgets/google_auth_widget.dart';
+// import 'package:quickcall/widgets/auth_type_divide_widget.dart';
+// import 'package:quickcall/widgets/google_auth_widget.dart';
 import 'package:quickcall/widgets/button_widgets.dart';
 import 'package:quickcall/widgets/text_input_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -104,13 +104,13 @@ class _SignInState extends State<SignIn> {
                   inputController: _password,
                   isTextObscured: true,
                 ),
-                SizedBox(height: AppDimensions.spacing50),
-                const AuthTypeDivider(),
-                SizedBox(height: AppDimensions.spacing50),
-                const GoogleAuthWidget(label: "Continue with Google"),
+                // SizedBox(height: AppDimensions.spacing50),
+                // const AuthTypeDivider(),
+                // SizedBox(height: AppDimensions.spacing50),
+                // const GoogleAuthWidget(label: "Continue with Google"),
                 SizedBox(height: AppDimensions.spacing20),
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  const Text(
+                  Text(
                     "Don't have an account ?",
                     style: CustomTextStyles.primaryTextStyle,
                   ),
@@ -127,7 +127,7 @@ class _SignInState extends State<SignIn> {
                   ),
                 ]),
                 SizedBox(
-                  height: AppDimensions.spacing350,
+                  height: AppDimensions.spacing250,
                 ),
                 ActionButton(
                   text: "Next",
