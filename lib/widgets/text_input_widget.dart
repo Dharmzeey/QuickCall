@@ -8,19 +8,16 @@ class InfoTextInputWidget extends StatelessWidget {
     required this.label,
     required this.inputController,
     this.isReadOnly,
-    this.isTextObscured,
   });
   final String label;
   final TextEditingController inputController;
   final bool? isReadOnly;
-  final bool? isTextObscured;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       style: const TextStyle(color: AppColors.mainColor),
       controller: inputController,
-      obscureText: isTextObscured ?? false,
       decoration: InputDecoration(
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: AppColors.mainColor, width: 1.0),
@@ -39,32 +36,44 @@ class InfoTextInputWidget extends StatelessWidget {
   }
 }
 
-class LoginTextInputWidget extends StatelessWidget {
+class PasswordInputWidget extends StatelessWidget {
+  const PasswordInputWidget({
+    super.key,
+    required this.label,
+    required this.inputController,
+    this.isReadOnly,
+  });
   final String label;
-  final Icon iconType;
-  const LoginTextInputWidget(
-      {super.key, required this.label, required this.iconType});
+  final TextEditingController inputController;
+  final bool? isReadOnly;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      style: const TextStyle(color: AppColors.mainColor),
+      controller: inputController,
+      obscureText: true,
       decoration: InputDecoration(
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: AppColors.mainColor, width: 1.0),
           borderRadius: BorderRadius.circular(10),
         ),
+        contentPadding:
+            EdgeInsets.symmetric(horizontal: AppDimensions.paddingSmall),
         label: Text(label),
         labelStyle: TextStyle(
             color: AppColors.mainColor,
             fontSize: AppDimensions.font20,
             fontWeight: FontWeight.w400),
         border: const OutlineInputBorder(),
-        prefixIcon: iconType,
-        iconColor: AppColors.mainColor,
+        suffixIcon: GestureDetector()
       ),
     );
   }
 }
+
+
+
 
 // class InfoTextInputWidget extends StatelessWidget {
 //   const InfoTextInputWidget({super.key, required this.label});

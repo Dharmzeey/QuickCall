@@ -51,7 +51,7 @@ class WelcomeScreen extends StatelessWidget {
                     color: AppColors.mainColor,
                   ),
                   Text(
-                    'Location Service Unavailable',
+                    'Location / Internet Service Unavailable',
                     style: TextStyle(
                         fontSize: AppDimensions.font18,
                         color: AppColors.mainColor),
@@ -82,7 +82,9 @@ class WelcomeScreen extends StatelessWidget {
               () => Text(
                 displayDetailsController.displayName.value,
                 style: TextStyle(
-                    color: AppColors.mainColor, fontSize: AppDimensions.font26),
+                  color: AppColors.mainColor,
+                  fontSize: AppDimensions.font32,
+                ),
               ),
             ),
             SizedBox(
@@ -249,6 +251,7 @@ class MyDrawer extends StatelessWidget {
             height: AppDimensions.spacing50,
           ),
           Obx(() => Column(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: displayDetailsController.isLoggedIn.value == true
                     ? [
                         MyListTile(
@@ -289,6 +292,8 @@ class MyDrawer extends StatelessWidget {
       ),
     );
   }
+
+  
 
   void toSignIn() {
     Get.offAndToNamed(AppRoutes.signIn);

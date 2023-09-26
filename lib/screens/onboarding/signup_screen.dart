@@ -22,8 +22,12 @@ class _SignUpState extends State<SignUp> {
   final _formKey = GlobalKey<FormState>();
   late final TextEditingController _username;
   late final TextEditingController _password;
+  late final TextEditingController _password2;
   bool isEnabled = false;
   bool isProcessing = false;
+
+  bool _obscureText1 = true;
+  bool _obscureText2 = true;
 
   void checkFieldValue(String username, String password) {
     if (username.length > 3 && password.length > 5) {
@@ -49,6 +53,7 @@ class _SignUpState extends State<SignUp> {
     super.initState();
     _username = TextEditingController();
     _password = TextEditingController();
+    _password2 = TextEditingController();
     _username.addListener(() {
       checkFieldValue(_username.text, _password.text);
     });
@@ -61,6 +66,7 @@ class _SignUpState extends State<SignUp> {
   void dispose() {
     _username.dispose();
     _password.dispose();
+    _password2.dispose();
     super.dispose();
   }
 
@@ -104,10 +110,74 @@ class _SignUpState extends State<SignUp> {
                   inputController: _username,
                 ),
                 SizedBox(height: AppDimensions.spacing30),
-                InfoTextInputWidget(
-                  label: "Password",
-                  inputController: _password,
-                  isTextObscured: true,
+                // PasswordInputWidget(
+                //   label: "Password",
+                //   inputController: _password,
+                // ),
+                TextFormField(
+                  style: const TextStyle(color: AppColors.mainColor),
+                  controller: _password,
+                  obscureText: _obscureText1,
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: AppColors.mainColor, width: 1.0),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    contentPadding: EdgeInsets.symmetric(
+                        horizontal: AppDimensions.paddingSmall),
+                    label: const Text("Password"),
+                    labelStyle: TextStyle(
+                        color: AppColors.mainColor,
+                        fontSize: AppDimensions.font20,
+                        fontWeight: FontWeight.w400),
+                    border: const OutlineInputBorder(),
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        setState(
+                          () {
+                            _obscureText1 = !_obscureText1;
+                          },
+                        );
+                      },
+                      icon: Icon(_obscureText1
+                          ? Icons.visibility
+                          : Icons.visibility_off),
+                    ),
+                  ),
+                ),
+                SizedBox(height: AppDimensions.spacing30),
+                TextFormField(
+                  style: const TextStyle(color: AppColors.mainColor),
+                  controller: _password2,
+                  obscureText: _obscureText2,
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: AppColors.mainColor, width: 1.0),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    contentPadding: EdgeInsets.symmetric(
+                        horizontal: AppDimensions.paddingSmall),
+                    label: const Text("Confirm Password"),
+                    labelStyle: TextStyle(
+                        color: AppColors.mainColor,
+                        fontSize: AppDimensions.font20,
+                        fontWeight: FontWeight.w400),
+                    border: const OutlineInputBorder(),
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        setState(
+                          () {
+                            _obscureText2 = !_obscureText2;
+                          },
+                        );
+                      },
+                      icon: Icon(_obscureText2
+                          ? Icons.visibility
+                          : Icons.visibility_off),
+                    ),
+                  ),
                 ),
                 // SizedBox(height: AppDimensions.spacing50),
                 // const AuthTypeDivider(),
@@ -161,18 +231,26 @@ class _SignUpState extends State<SignUp> {
   }
 
   Future<void> createUser() async {
-    setState(() {
-      isProcessing = true;
-      isEnabled = false;
-    });
-    final bool signUpResponse =
-        await Authentication().signUp(_username, _password);
-    if (signUpResponse) {
-      Get.offAndToNamed(AppRoutes.signIn);
-    } else {}
-    setState(() {
-      isProcessing = false;
-      isEnabled = true;
-    });
+    if (_password.text.length < 5) {
+      Get.snackbar('Message', 'Password too short',
+          colorText: AppColors.mainColor);
+    } else if (_password.text != _password2.text) {
+      Get.snackbar('Message', 'Password does not match',
+          colorText: AppColors.mainColor);
+    } else {
+      setState(() {
+        isProcessing = true;
+        isEnabled = false;
+      });
+      final bool signUpResponse =
+          await Authentication().signUp(_username, _password);
+      if (signUpResponse) {
+        Get.offAndToNamed(AppRoutes.signIn);
+      } else {}
+      setState(() {
+        isProcessing = false;
+        isEnabled = true;
+      });
+    }
   }
 }

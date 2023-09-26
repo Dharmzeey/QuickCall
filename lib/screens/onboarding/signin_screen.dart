@@ -25,6 +25,7 @@ class _SignInState extends State<SignIn> {
   late final TextEditingController _password;
   bool isEnabled = false;
   bool isProcessing = false;
+  bool _obscureText1 = true;
   final displayNameController = Get.put(DisplayDetailsController());
 
   void checkFieldValue(String username, String password) {
@@ -99,10 +100,37 @@ class _SignInState extends State<SignIn> {
                   inputController: _username,
                 ),
                 SizedBox(height: AppDimensions.spacing30),
-                InfoTextInputWidget(
-                  label: "Password",
-                  inputController: _password,
-                  isTextObscured: true,
+                TextFormField(
+                  style: const TextStyle(color: AppColors.mainColor),
+                  controller: _password,
+                  obscureText: _obscureText1,
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: AppColors.mainColor, width: 1.0),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    contentPadding: EdgeInsets.symmetric(
+                        horizontal: AppDimensions.paddingSmall),
+                    label: const Text("Password"),
+                    labelStyle: TextStyle(
+                        color: AppColors.mainColor,
+                        fontSize: AppDimensions.font20,
+                        fontWeight: FontWeight.w400),
+                    border: const OutlineInputBorder(),
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        setState(
+                          () {
+                            _obscureText1 = !_obscureText1;
+                          },
+                        );
+                      },
+                      icon: Icon(_obscureText1
+                          ? Icons.visibility
+                          : Icons.visibility_off),
+                    ),
+                  ),
                 ),
                 // SizedBox(height: AppDimensions.spacing50),
                 // const AuthTypeDivider(),

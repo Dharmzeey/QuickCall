@@ -31,6 +31,8 @@ class _MedicalInformationState extends State<MedicalInformation> {
     if (widget.initialData != null) {
       _bloodGroup.text = widget.initialData!.bloodType;
       _genotype.text = widget.initialData!.genotype;
+      _allergies.text = widget.initialData?.allergies?.join(",") ?? '';
+      _otherConditions.text = widget.initialData?.chronicConditions?.join(",") ?? '';
       _familyDoctorContact.text = widget.initialData?.famDocContact ?? '';
       isEnabled = true;
     }

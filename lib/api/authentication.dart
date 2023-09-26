@@ -24,7 +24,8 @@ class Authentication {
           colorText: AppColors.mainColor);
       return true;
     } else {
-      Get.snackbar('Error', response.body, colorText: AppColors.mainColor);
+      final errorMsg = jsonDecode(response.body)['message'];
+      Get.snackbar('Error', errorMsg, colorText: AppColors.mainColor);
       return false;
     }
   }
@@ -53,7 +54,8 @@ class Authentication {
           colorText: AppColors.mainColor);
       return responseData;
     } else {
-      Get.snackbar('Error', response.body, colorText: AppColors.mainColor);
+      final errorMsg = jsonDecode(response.body)['message'];
+      Get.snackbar('Error', errorMsg, colorText: AppColors.mainColor);
       return false;
     }
   }

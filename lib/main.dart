@@ -63,7 +63,6 @@ class MyApp extends StatelessWidget {
           }
         },
       ),
-      // home: WelcomeScreen(),
       initialRoute: AppRoutes.initial,
       getPages: AppRoutes.routes,
     );

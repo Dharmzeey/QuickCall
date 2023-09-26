@@ -17,6 +17,7 @@ class EmergencyTypeWidget extends StatelessWidget {
   final Color bgColor;
   final String imageUrl;
   final Map<String, dynamic> args;
+  
 
   final LocationController locationController = Get.put(LocationController());
 
@@ -26,7 +27,10 @@ class EmergencyTypeWidget extends StatelessWidget {
       padding: EdgeInsets.only(left: AppDimensions.spacing18),
       child: Row(
         children: [
-          Image(image: AssetImage(imageUrl)),
+          Image(
+            width: AppDimensions.font50,
+            image: AssetImage(imageUrl),
+          ),
           SizedBox(
             width: AppDimensions.spacing18,
           ),
@@ -35,8 +39,8 @@ class EmergencyTypeWidget extends StatelessWidget {
               if (locationController.hasPermission) {
                 Get.toNamed(AppRoutes.emergencyInfo, arguments: args);
               } else {
-                Get.snackbar(
-                    "Location Disabled", "Please enable location service",
+                Get.snackbar("Service Disabled",
+                    "Please enable Internet and location service",
                     colorText: AppColors.mainColor);
               }
             },
@@ -48,7 +52,7 @@ class EmergencyTypeWidget extends StatelessWidget {
             child: Text(
               text,
               style: TextStyle(
-                  fontSize: AppDimensions.font20, fontWeight: FontWeight.w400),
+                  fontSize: AppDimensions.font26, fontWeight: FontWeight.w400),
             ),
           )
         ],

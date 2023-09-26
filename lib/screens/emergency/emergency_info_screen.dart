@@ -27,7 +27,10 @@ class EmergencyInformation extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           emergencyType,
-          style: const TextStyle(color: AppColors.mainColor),
+          style: TextStyle(
+            color: AppColors.mainColor,
+            fontSize: AppDimensions.font20,
+          ),
         ),
         iconTheme: const IconThemeData(color: AppColors.mainColor),
         backgroundColor: AppColors.bgColor,

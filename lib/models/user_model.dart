@@ -30,6 +30,7 @@ class User {
     required this.createdAt,
     required this.updatedAt,
   });
+  
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         userId: json["userId"],

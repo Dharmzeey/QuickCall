@@ -37,10 +37,7 @@ class _AllowLocationState extends State<AllowLocation> {
   @override
   void initState() {
     super.initState();
-    if (!locationController.hasPermission) {
-      _triggerLocation();
-      Get.put<UserProfileController>(UserProfileController());
-    }
+
   }
 
   @override

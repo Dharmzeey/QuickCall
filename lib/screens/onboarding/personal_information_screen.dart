@@ -45,7 +45,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
       _phoneNumber.text = widget.initialData!.phoneNo1;
       _age.text = widget.initialData!.age;
       _selectedGender = widget.initialData!.gender;
-      _emergencyContact.text = widget.initialData?.emergencyPhoneNo ?? '';
+      _emergencyContact.text = widget.initialData?.nameOfEmerContact ?? '';
       _emergencyContactrelationship.text =
           widget.initialData?.relationship ?? '';
       _emergencyContactphoneNumber.text =

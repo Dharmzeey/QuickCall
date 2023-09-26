@@ -17,7 +17,7 @@ import 'package:quickcall/screens/emergency/welcome_screen.dart';
 
 class AppRoutes {
   static const String initial = "/";
-  static const String signIn = "/login";
+  static const String signIn = "/signin";
   static const String signUp = "/signup";
   static const String allowLocation = "/allow-location";
   static const String personalInformation = "/personal-information";
